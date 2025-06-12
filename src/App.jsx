@@ -19,19 +19,19 @@ export default function App() {
   };
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Vendidos" {...a11yProps(0)} />
-          <Tab label="Em estoque" {...a11yProps(1)} />
-        </Tabs>
+      <Box sx={{ width: '100%' }}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+            <Tab label="Vendidos" {...a11yProps(0)} />
+            <Tab label="Em estoque" {...a11yProps(1)} />
+          </Tabs>
+        </Box>
+        <CustomTabPanel value={value} index={0}>
+          <Tabelazona></Tabelazona>
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={1}>
+          <Tabelazona></Tabelazona>
+        </CustomTabPanel>
       </Box>
-      <CustomTabPanel value={value} index={0}>
-        <Tabelazona></Tabelazona>
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-        <Tabelazona></Tabelazona>
-      </CustomTabPanel>
-    </Box>
   );
 }
