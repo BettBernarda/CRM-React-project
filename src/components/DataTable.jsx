@@ -35,10 +35,10 @@ export default function DataTable({ items, labels = [], fields = [] }) {
             >
               {fields.map((field, id) => {
                 if (id == 0) {
-                  return <TableCell key={row.id + '.' + id} component="th" scope="row">{row[field].toString()}</TableCell>
+                  return <TableCell key={id} component="th" scope="row">{row[field].toString()}</TableCell>
                 }
 
-                return <TableCell key={row.id + '.' + id} align="right">{row[field].toString()}</TableCell>
+                return <TableCell key={id} align="right">{row[field].toString()}</TableCell>
               })}
             </TableRow>
           ))}
