@@ -6,6 +6,12 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
+/**
+ * 
+ * @param labels Rótulos das colunas da tabela, na ordem especificada
+ * @param fields Nomes dos campos que devem ser mostrados de cada item, na ordem especificada
+ * @param items Os itens/linhas que devem ser mostrados
+ */
 export default function DataTable({ items, labels = [], fields = [] }) {
   return (
     <TableContainer component={Paper}>
