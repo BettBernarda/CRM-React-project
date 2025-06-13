@@ -1,10 +1,16 @@
 import { Box, Tab, Tabs } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomTabPanel, { a11yProps } from "../components/CustomTabPanel";
 import DataTable from "../components/DataTable";
+import axios from "axios";
 
 export default function ItemsPage() {
   const [value, setValue] = useState(0);
+  const [productsList, setProductsList] = useState([])
+
+  useEffect(() => {
+    axios.get(`http://localhost:3000/produtos`).then(response => setProductsList(response.data))
+  }, [])
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -19,7 +25,12 @@ export default function ItemsPage() {
           </Tabs>
         </Box>
         <CustomTabPanel value={value} index={0}>
-          <DataTable labels={["ID", "Status", "Descrição", "Preço", "Categoria", "Fornecedor"]}></DataTable>
+          <DataTable 
+            items={productsList}
+            fields={["id", "status", "descricao", "preco", "categoria_id", "fornecedor_id"]}
+            labels={["ID", "Status", "Descrição", "Preço", "Categoria", "Fornecedor"]} 
+          >
+          </DataTable>
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
           <DataTable></DataTable>
