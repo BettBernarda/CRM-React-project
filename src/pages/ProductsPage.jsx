@@ -33,7 +33,12 @@ export default function ItemsPage() {
           </DataTable>
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
-          <DataTable></DataTable>
+          <DataTable 
+            items={productsList}
+            fields={["id", "status", "descricao", "preco", "categoria_id", "fornecedor_id"]}
+            labels={["ID", "Status", "Descrição", "Preço", "Categoria", "Fornecedor"]} 
+          >
+          </DataTable>
         </CustomTabPanel>
       </Box>
   );
