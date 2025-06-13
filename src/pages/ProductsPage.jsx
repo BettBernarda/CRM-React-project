@@ -1,7 +1,7 @@
 import { Box, Tab, Tabs } from "@mui/material";
 import { useState } from "react";
 import CustomTabPanel, { a11yProps } from "../components/CustomTabPanel";
-import Tabelazona from "../components/Tabelazona";
+import DataTable from "../components/DataTable";
 
 export default function ItemsPage() {
   const [value, setValue] = useState(0);
@@ -19,10 +19,10 @@ export default function ItemsPage() {
           </Tabs>
         </Box>
         <CustomTabPanel value={value} index={0}>
-          <Tabelazona labels={["id"]}></Tabelazona>
+          <DataTable labels={["ID", "Status", "Descrição", "Preço", "Categoria", "Fornecedor"]}></DataTable>
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
-          <Tabelazona></Tabelazona>
+          <DataTable></DataTable>
         </CustomTabPanel>
       </Box>
   );
