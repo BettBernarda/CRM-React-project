@@ -39,8 +39,10 @@ export default function DefaultTemplate() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <ResponsiveAppBar></ResponsiveAppBar>
-        {generateBreadcrumbs()}
+        <div className="ml-5 mr-5">
+          {generateBreadcrumbs()}
         <Outlet></Outlet>
+        </div>
       </ThemeProvider>
     )
 }
