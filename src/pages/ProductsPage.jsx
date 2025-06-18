@@ -1,7 +1,6 @@
-import { Box, Tab, Tabs } from "@mui/material";
+import { Box, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs } from "@mui/material";
 import { useEffect, useState } from "react";
 import CustomTabPanel, { a11yProps } from "../components/CustomTabPanel";
-import DataTable from "../components/DataTable";
 import axios from "axios";
 
 export default function ItemsPage() {
@@ -25,20 +24,66 @@ export default function ItemsPage() {
           </Tabs>
         </Box>
         <CustomTabPanel value={value} index={0}>
-          <DataTable 
-            items={productsList}
-            fields={["id", "status", "descricao", "preco", "categoria_id", "fornecedor_id"]}
-            labels={["ID", "Status", "Descrição", "Preço", "Categoria", "Fornecedor"]} 
-          >
-          </DataTable>
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>ID</TableCell>
+                  <TableCell align="right">Status</TableCell>
+                  <TableCell align="right">Descrição</TableCell>
+                  <TableCell align="right">Preço</TableCell>
+                  <TableCell align="right">Categoria</TableCell>
+                  <TableCell align="right">Fornecedor</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {productsList.map(product => (
+                  <TableRow
+                    key={product.id}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  >{console.log(product)}
+                    <TableCell component="th" scope="row">{product.id.toString()}</TableCell>
+                    <TableCell align="right">{product.status.toString()}</TableCell>
+                    <TableCell align="right">{product.descricao.toString()}</TableCell>
+                    <TableCell align="right">{product.preco.toString()}</TableCell>
+                    <TableCell align="right">{product.categoria_id.toString()}</TableCell>
+                    <TableCell align="right">{product.fornecedor_id.toString()}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
-          <DataTable 
-            items={productsList}
-            fields={["id", "status", "descricao", "preco", "categoria_id", "fornecedor_id"]}
-            labels={["ID", "Status", "Descrição", "Preço", "Categoria", "Fornecedor"]} 
-          >
-          </DataTable>
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>ID</TableCell>
+                  <TableCell align="right">Status</TableCell>
+                  <TableCell align="right">Descrição</TableCell>
+                  <TableCell align="right">Preço</TableCell>
+                  <TableCell align="right">Categoria</TableCell>
+                  <TableCell align="right">Fornecedor</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {productsList.map(product => (
+                  <TableRow
+                    key={product.id}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  >{console.log(product)}
+                    <TableCell component="th" scope="row">{product.id.toString()}</TableCell>
+                    <TableCell align="right">{product.status.toString()}</TableCell>
+                    <TableCell align="right">{product.descricao.toString()}</TableCell>
+                    <TableCell align="right">{product.preco.toString()}</TableCell>
+                    <TableCell align="right">{product.categoria_id.toString()}</TableCell>
+                    <TableCell align="right">{product.fornecedor_id.toString()}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
         </CustomTabPanel>
       </Box>
   );
