@@ -15,7 +15,7 @@ export default function DefaultTemplate() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <ResponsiveAppBar></ResponsiveAppBar>
-        <SnackbarProvider maxSnack={3}>
+        <SnackbarProvider maxSnack={3} autoHideDuration={5000}>
           <div className="m-4">
             <div className="mb-4">
               <PathBreadcrumbs></PathBreadcrumbs>
