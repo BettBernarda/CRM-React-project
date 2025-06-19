@@ -19,6 +19,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 const pages = [
   { 'name': 'Home', 'link': '/' },
   { 'name': 'Produtos', 'link': '/produtos' },
+  { 'name': 'Categorias de Produtos', 'link': '/produtos/categorias' },
   ];
 
 
