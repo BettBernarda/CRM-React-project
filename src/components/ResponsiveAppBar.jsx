@@ -17,6 +17,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
 const pages = [
+  { 'name': 'Home', 'link': '/' },
   { 'name': 'Produtos', 'link': '/produtos' },
   ];
 
