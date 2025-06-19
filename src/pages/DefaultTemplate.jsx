@@ -15,7 +15,9 @@ export default function DefaultTemplate() {
         <CssBaseline />
         <ResponsiveAppBar></ResponsiveAppBar>
         <div className="m-4">
-          <PathBreadcrumbs></PathBreadcrumbs>
+          <div className="mb-4">
+            <PathBreadcrumbs></PathBreadcrumbs>
+          </div>
           <Outlet></Outlet>
         </div>
       </ThemeProvider>
