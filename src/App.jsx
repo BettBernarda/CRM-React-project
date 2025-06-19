@@ -6,6 +6,7 @@ import axios from "axios";
 import ProductPage from "./pages/ProductPage";
 import PageNotFound from "./pages/PageNotFound";
 import ProductCategoriesPage from "./pages/ProductCategoriesPage";
+import ProductCategoryPage from "./pages/ProductCategoryPage";
 
 export default function App() {
   axios.defaults.baseURL = 'http://localhost:3000'
@@ -26,6 +27,10 @@ export default function App() {
         {
           path: "/produtos/categorias",
           element: <ProductCategoriesPage />
+        },
+        {
+          path: "/produtos/categorias/:id",
+          element: <ProductCategoryPage />
         },
         {
           path: '/produtos/:id',
