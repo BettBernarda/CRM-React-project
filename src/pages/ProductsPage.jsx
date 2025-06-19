@@ -1,4 +1,4 @@
-import { Box, Fab, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, Typography } from "@mui/material";
+import { Box, Fab, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, Tooltip, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import CustomTabPanel, { a11yProps } from "../components/CustomTabPanel";
 import axios from "axios";
@@ -73,9 +73,11 @@ export default function ItemsPage() {
               </Table>
             </TableContainer>
             <Box sx={{ '& > :not(style)': { m: 1 } }} className="flex justify-end">
-              <Fab color="primary" aria-label="add">
-                <AddIcon />
-              </Fab>
+              <Tooltip title="Criar produto" onClick={() => navigate('/produtos/novo')}>
+                <Fab color="primary" aria-label="add">
+                  <AddIcon />
+                </Fab>
+              </Tooltip>
             </Box>
           </CustomTabPanel>
           <CustomTabPanel value={value} index={1}>
