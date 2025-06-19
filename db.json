@@ -1,7 +1,7 @@
 {
   "fornecedores": [
     {
-      "id": 1,
+      "id": "1",
       "nome": "Fornecedor Alpha",
       "cnpj": "12345678000190",
       "telefone": "48999990001",
@@ -11,7 +11,7 @@
       "updated_at": "2024-06-01T10:00:00Z"
     },
     {
-      "id": 2,
+      "id": "2",
       "nome": "Fornecedor Beta",
       "cnpj": "98765432000188",
       "telefone": "48999990002",
@@ -23,14 +23,14 @@
   ],
   "categorias_produto": [
     {
-      "id": 1,
+      "id": "681c1c7f-fa90-4a41-a518-2c14c18d101a",
       "nome": "Bebidas",
       "descricao": "Bebidas em geral",
       "created_at": "2024-01-10T08:00:00Z",
       "updated_at": "2024-06-01T08:00:00Z"
     },
     {
-      "id": 2,
+      "id": "f4c3f5e0-7a91-4ee4-8c29-83b4520601b9",
       "nome": "Snacks",
       "descricao": "Lanches e salgadinhos",
       "created_at": "2024-01-11T08:00:00Z",
@@ -39,31 +39,40 @@
   ],
   "produtos": [
     {
-      "id": 1,
+      "id": "98d7d4af-ca7f-4b13-b71e-f49c0c16d954",
       "status": true,
       "nome": "Coca-Cola 2L",
       "descricao": "Refrigerante sabor cola",
-      "preco": 8.90,
+      "preco": 8.9,
       "categoria_id": 1,
       "fornecedor_id": 1,
       "created_at": "2024-01-15T09:00:00Z",
       "updated_at": "2024-06-01T09:00:00Z"
     },
     {
-      "id": 2,
+      "id": "9f8834e0-62c9-40c0-b3a2-8418b87cd351",
       "status": true,
       "nome": "Batata Chips",
       "descricao": "Batata frita em pacote",
-      "preco": 5.50,
+      "preco": 5.5,
       "categoria_id": 2,
       "fornecedor_id": 2,
       "created_at": "2024-01-16T09:00:00Z",
       "updated_at": "2024-06-01T09:10:00Z"
+    },
+    {
+      "id": "b2d42215-9a4d-4405-af4c-c12571ee9289",
+      "nome": "NOME",
+      "status": true,
+      "descricao": "ADSAS",
+      "preco": "12.99",
+      "categoria_id": "1",
+      "fornecedor_id": "1"
     }
   ],
   "usuarios": [
     {
-      "id": 1,
+      "id": "1",
       "nome": "Admin 1",
       "email": "admin1@sistema.com",
       "senha": "admin123",
@@ -72,7 +81,7 @@
       "updated_at": "2024-06-01T10:00:00Z"
     },
     {
-      "id": 2,
+      "id": "2",
       "nome": "Admin 2",
       "email": "admin2@sistema.com",
       "senha": "admin456",
@@ -83,13 +92,13 @@
   ],
   "clientes": [
     {
-      "id": 1,
+      "id": "1",
       "nome": "Maria Oliveira",
       "email": "maria@gmail.com",
       "senha": "maria123"
     },
     {
-      "id": 2,
+      "id": "2",
       "nome": "Carlos Souza",
       "email": "carlos@gmail.com",
       "senha": "carlos456"
@@ -97,12 +106,12 @@
   ],
   "vendas": [
     {
-      "id": 1,
+      "id": "1",
       "cliente_id": 1,
       "data_hora": "2024-06-10T14:30:00Z"
     },
     {
-      "id": 2,
+      "id": "2",
       "cliente_id": 2,
       "data_hora": "2024-06-11T15:45:00Z"
     }
@@ -110,23 +119,25 @@
   "venda_itens": [
     {
       "venda_id": 1,
-      "produto_id": 1
+      "produto_id": 1,
+      "id": "680c"
     },
     {
       "venda_id": 1,
-      "produto_id": 2
+      "produto_id": 2,
+      "id": "361e"
     }
   ],
   "historico_compras": [
     {
-      "id": 1,
+      "id": "1",
       "usuario_id": 1,
       "produto_id": 1,
       "quantidade": 10,
       "data_compra": "2024-06-01T10:00:00Z"
     },
     {
-      "id": 2,
+      "id": "2",
       "usuario_id": 2,
       "produto_id": 2,
       "quantidade": 5,
@@ -135,7 +146,7 @@
   ],
   "promocoes": [
     {
-      "id": 1,
+      "id": "1",
       "produto_id": 1,
       "descricao": "Promoção Coca",
       "preco_promocional": 7.99,
@@ -145,7 +156,7 @@
       "updated_at": "2024-06-01T10:00:00Z"
     },
     {
-      "id": 2,
+      "id": "2",
       "produto_id": 2,
       "descricao": "Snack em Dobro",
       "preco_promocional": 4.99,
