@@ -3,8 +3,11 @@ import { useEffect, useState } from "react";
 import CustomTabPanel, { a11yProps } from "../components/CustomTabPanel";
 import axios from "axios";
 import { Add as AddIcon } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 export default function ItemsPage() {
+  const navigate = useNavigate()
+
   const [value, setValue] = useState(0);
   const [productsList, setProductsList] = useState([])
   const [fornecedoresList, setFornecedoresList] = useState([])
@@ -52,7 +55,11 @@ export default function ItemsPage() {
                   {productsList.map(product => (
                     <TableRow
                       key={product.id}
-                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                      sx={{ 
+                        '&:last-child td, &:last-child th': { border: 0 },
+                        '&:hover': { cursor: 'pointer' }
+                      }}
+                      onClick={() => navigate(`/produtos/${product.id}`)}
                     >
                       <TableCell component="th" scope="row">{product.id}</TableCell>
                       <TableCell align="right">{product.status ? 'Ativo' : 'Inativo'}</TableCell>
