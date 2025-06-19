@@ -1,15 +1,16 @@
-import { Box, Fab, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, Tooltip, Typography } from "@mui/material";
+import { Box, Fab, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Tooltip, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Add as AddIcon } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 
-export default function ItemsPage() {
+export default function ProductsPage() {
   const navigate = useNavigate()
 
   const [productsList, setProductsList] = useState([])
   const [fornecedoresList, setFornecedoresList] = useState([])
   const [categoriasList, setCategoriasList] = useState([])
+  const [searchText, setSearchText] = useState('')
 
   useEffect(() => {
     axios.get(`/produtos`).then(response => setProductsList(response.data))
@@ -25,6 +26,13 @@ export default function ItemsPage() {
         <Typography variant="h4" gutterBottom>
           Produtos
         </Typography>
+        <TextField fullWidth
+            label="Pesquise por uma categoria"
+            type="search"
+            variant="standard"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+          />
         <Box sx={{ width: '100%' }}>
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -40,7 +48,9 @@ export default function ItemsPage() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {productsList.map(product => (
+                {productsList
+                  .filter(product => product.nome.toUpperCase().includes(searchText.toUpperCase()))
+                  .map(product => (
                   <TableRow
                     key={product.id}
                     sx={{ 
