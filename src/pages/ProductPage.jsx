@@ -105,6 +105,10 @@ export default function ProductPage() {
       return false
     }
 
+    if (product.preco < 0) {
+      showMessageError('Preço do produto não pode ser menor que zero!')
+    }
+
     if (!product.categoria_id) {
       showMessageError('É necessário selecionar a categoria do produto!')
       return false
