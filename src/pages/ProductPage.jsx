@@ -2,6 +2,7 @@ import { Autocomplete, Box, Button, Checkbox, FormControl, FormControlLabel, Men
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { showMessageSuccess } from "../utils/notification-utils";
 
 export default function ProductPage() {
   const [fornecedoresList, setFornecedoresList] = useState([])
@@ -35,6 +36,8 @@ export default function ProductPage() {
     } else {
       axios.post(`/produtos`, product)
     }
+
+    showMessageSuccess('Produto salvo com sucesso!');
   }
 
   return (
@@ -45,12 +48,6 @@ export default function ProductPage() {
       autoComplete="off"
       onSubmit={handleSave}
     >
-      <Snackbar
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={open}
-        autoHideDuration={5000}
-        message="I love snacks"
-        />
       <FormControl>
         <TextField
           label="Nome"

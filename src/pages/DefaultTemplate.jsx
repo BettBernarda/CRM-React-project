@@ -2,6 +2,7 @@ import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import ResponsiveAppBar from "../components/ResponsiveAppBar";
 import PathBreadcrumbs from "../components/PathBreadcrumbs";
+import { SnackbarProvider } from "notistack";
 
 export default function DefaultTemplate() {
     const theme = createTheme({
@@ -14,12 +15,14 @@ export default function DefaultTemplate() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <ResponsiveAppBar></ResponsiveAppBar>
-        <div className="m-4">
-          <div className="mb-4">
-            <PathBreadcrumbs></PathBreadcrumbs>
+        <SnackbarProvider maxSnack={3}>
+          <div className="m-4">
+            <div className="mb-4">
+              <PathBreadcrumbs></PathBreadcrumbs>
+            </div>
+            <Outlet />
           </div>
-          <Outlet></Outlet>
-        </div>
+        </SnackbarProvider>
       </ThemeProvider>
     )
 }
