@@ -1,4 +1,4 @@
-import { Box, Fab, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs } from "@mui/material";
+import { Box, Fab, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import CustomTabPanel, { a11yProps } from "../components/CustomTabPanel";
 import axios from "axios";
@@ -25,6 +25,9 @@ export default function ItemsPage() {
 
   return (
       <>
+        <Typography variant="h4" gutterBottom>
+          Produtos
+        </Typography>
         <Box sx={{ width: '100%' }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
