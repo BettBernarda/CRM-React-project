@@ -63,14 +63,14 @@ export default function ProductPage() {
     }
   }
 
-    const handleNew = () => {
+  const handleNew = () => {
     navigate('/produtos/novo')
     setProduct({
       id: product.id,
       nome: '',
       status: true,
       descricao: '',
-      preco: null,
+      preco: 0,
       categoria_id: null,
       fornecedor_id: null
     })
@@ -83,7 +83,7 @@ export default function ProductPage() {
         nome: '',
         status: true,
         descricao: '',
-        preco: null,
+        preco: 0,
         categoria_id: null,
         fornecedor_id: null
       })
@@ -118,8 +118,8 @@ export default function ProductPage() {
       return false
     }
 
-    if (product.preco < 0) {
-      showMessageError('Preço do produto não pode ser menor que zero!')
+    if (product.preco <= 0) {
+      showMessageError('Preço do produto deve ser maior que zero!')
     }
 
     if (!product.categoria_id) {
