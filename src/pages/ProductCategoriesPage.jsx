@@ -36,7 +36,7 @@ export default function ProductCategoriesPage() {
                     '&:last-child td, &:last-child th': { border: 0 },
                     '&:hover': { cursor: 'pointer' }
                   }}
-                  onClick={() => navigate(`/produtos/${categoria.id}`)}
+                  onClick={() => navigate(`/produtos/categorias/${categoria.id}`)}
                 >
                   <TableCell component="th" scope="row">{categoria.id}</TableCell>
                   <TableCell align="right">{categoria.nome}</TableCell>
@@ -47,7 +47,7 @@ export default function ProductCategoriesPage() {
           </Table>
         </TableContainer>
         <Box sx={{ '& > :not(style)': { m: 1 } }} className="flex justify-end">
-          <Tooltip title="Criar produto" onClick={() => navigate('/produtos/novo')}>
+          <Tooltip title="Criar produto" onClick={() => navigate('/produtos/categorias/novo')}>
             <Fab color="primary" aria-label="add">
               <AddIcon />
             </Fab>
