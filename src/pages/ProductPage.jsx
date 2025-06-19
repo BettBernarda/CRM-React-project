@@ -17,7 +17,7 @@ export default function ProductPage() {
     nome: '',
     status: true,
     descricao: '',
-    preco: 0.00,
+    preco: null,
     categoria_id: null,
     fornecedor_id: null
   })
@@ -39,7 +39,7 @@ export default function ProductPage() {
     }
 
     
-    product.updated_at = new Date()
+    setProduct({ ...product, updated_at: new Date() })
 
     if (id != 'novo') {
       axios.patch(`/produtos/${id}`, product)
@@ -52,7 +52,7 @@ export default function ProductPage() {
           console.log(err)
         })
     } else {
-      product.created_at = product.updated_at
+      setProduct({ ...product, created_at: product.updated_at })
 
       axios.post(`/produtos`, product)
         .then(response => {
@@ -61,6 +61,19 @@ export default function ProductPage() {
         })
         .catch(() => showMessageError('Ocorreu um erro ao salvar o produto'))
     }
+  }
+
+    const handleNew = () => {
+    navigate('/produtos/novo')
+    setProduct({
+      id: product.id,
+      nome: '',
+      status: true,
+      descricao: '',
+      preco: null,
+      categoria_id: null,
+      fornecedor_id: null
+    })
   }
 
   const handleDelete = () => {
@@ -207,6 +220,11 @@ export default function ProductPage() {
               <Button variant="contained" color="primary" type="submit" fullWidth>
                 Salvar
               </Button>
+              <Button variant="outlined" color="primary" type="button" onClick={handleNew} fullWidth>
+                Novo Produto
+              </Button>
+            </Box>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}>
               <Button variant="outlined" color="error" type="button" onClick={handleDelete} fullWidth>
                 Excluir
               </Button>
