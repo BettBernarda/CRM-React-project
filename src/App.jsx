@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import DefaultTemplate from "./pages/DefaultTemplate";
+import DefaultLayout from "./pages/DefaultLayout";
 import ProductsPage from "./pages/ProductsPage";
 import ChartsPage from "./pages/ChartsPage"
 import axios from "axios";
@@ -15,7 +15,7 @@ export default function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <DefaultTemplate />,
+      element: <DefaultLayout />,
       children: [
         {
           path: "/",
@@ -50,6 +50,6 @@ export default function App() {
   ])
 
   return (
-    <RouterProvider router={router}/>
+    <RouterProvider router={router} />
   );
 }

@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react"
 import { showMessageError, showMessageSuccess } from "../utils/notification-utils"
 import { UserContext } from "../context"
 import { Box, Button, Card, CardContent, CardHeader, TextField } from "@mui/material"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 export default function LoginPage() {
   const [user, setUser] = useState({})
@@ -67,6 +67,12 @@ export default function LoginPage() {
               <Button variant="contained" color="primary" type="submit" fullWidth>
                 Entrar
               </Button>
+            </Box>
+            <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
+              Não tem uma conta?
+              <Link className='hover:cursor-pointer' underline="hover" color="inherit">
+                Cadastre-se
+              </Link>
             </Box>
           </Box>
         </CardContent>
