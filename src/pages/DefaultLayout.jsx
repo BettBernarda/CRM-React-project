@@ -5,7 +5,7 @@ import PathBreadcrumbs from "../components/PathBreadcrumbs";
 import { SnackbarProvider } from "notistack";
 import { UserContext } from "../context";
 
-export default function DefaultTemplate() {
+export default function DefaultLayout() {
     const theme = createTheme({
       colorSchemes: {
         dark: true,
