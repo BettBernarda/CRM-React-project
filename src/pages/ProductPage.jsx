@@ -133,8 +133,7 @@ export default function ProductPage() {
     }
 
     if (product.status == null) {
-      showMessageError('É necessário definir o status do produto!')
-      return false
+      setProduct({ ...product, status: false })
     }
 
     return true
