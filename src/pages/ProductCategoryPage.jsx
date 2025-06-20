@@ -28,7 +28,7 @@ export default function ProductCategoryPage() {
       return
     }
 
-    
+
     setCategory({ ...category, updated_at: new Date() })
 
     if (id != 'novo') {
@@ -106,48 +106,51 @@ export default function ProductCategoryPage() {
   }
 
   return (
-     <Box className="flex justify-center mt-10">
-      <Card sx={{ width: '50vw', minWidth: '300px' }}>
-        <CardHeader title={id === 'novo' ? "Novo Produto" : "Editar Produto"} />
-        <CardContent>
-          <Box
-            component="form"
-            onSubmit={handleSave}
-            sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
-          >
-            <TextField
-              label="Nome"
-              variant="outlined"
-              value={category.nome}
-              required
-              onChange={(e) => setCategory({ ...category, nome: e.target.value })}
-              fullWidth
-            />
-            <TextField
-              label="Descrição"
-              variant="outlined"
-              value={category.descricao}
-              required
-              onChange={(e) => setCategory({ ...category, descricao: e.target.value })}
-              fullWidth
-            />
+    <>
+      <RequireLogin />
+      <Box className="flex justify-center mt-10">
+        <Card sx={{ width: '50vw', minWidth: '300px' }}>
+          <CardHeader title={id === 'novo' ? "Novo Produto" : "Editar Produto"} />
+          <CardContent>
+            <Box
+              component="form"
+              onSubmit={handleSave}
+              sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
+            >
+              <TextField
+                label="Nome"
+                variant="outlined"
+                value={category.nome}
+                required
+                onChange={(e) => setCategory({ ...category, nome: e.target.value })}
+                fullWidth
+              />
+              <TextField
+                label="Descrição"
+                variant="outlined"
+                value={category.descricao}
+                required
+                onChange={(e) => setCategory({ ...category, descricao: e.target.value })}
+                fullWidth
+              />
 
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}>
-              <Button variant="contained" color="primary" type="submit" fullWidth>
-                Salvar
-              </Button>
-              <Button variant="outlined" color="primary" type="button" onClick={handleNew} fullWidth>
-                Nova Categoria
-              </Button>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}>
+                <Button variant="contained" color="primary" type="submit" fullWidth>
+                  Salvar
+                </Button>
+                <Button variant="outlined" color="primary" type="button" onClick={handleNew} fullWidth>
+                  Nova Categoria
+                </Button>
+              </Box>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}>
+                <Button variant="outlined" color="error" type="button" onClick={handleDelete} fullWidth>
+                  Excluir
+                </Button>
+              </Box>
             </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}>
-              <Button variant="outlined" color="error" type="button" onClick={handleDelete} fullWidth>
-                Excluir
-              </Button>
-            </Box>
-          </Box>
-        </CardContent>
-      </Card>
-    </Box>
+          </CardContent>
+        </Card>
+      </Box>
+    </>
   )
 }
