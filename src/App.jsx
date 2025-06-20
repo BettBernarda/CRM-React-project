@@ -7,6 +7,7 @@ import ProductPage from "./pages/ProductPage";
 import PageNotFound from "./pages/PageNotFound";
 import ProductCategoriesPage from "./pages/ProductCategoriesPage";
 import ProductCategoryPage from "./pages/ProductCategoryPage";
+import LoginPage from "./pages/LoginPage";
 
 export default function App() {
   axios.defaults.baseURL = 'http://localhost:3000'
@@ -19,6 +20,10 @@ export default function App() {
         {
           path: "/",
           element: <ChartsPage/>
+        },
+        {
+          path: "/login",
+          element: <LoginPage />
         },
         {
           path: "/produtos",
