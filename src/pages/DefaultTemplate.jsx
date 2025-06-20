@@ -14,18 +14,18 @@ export default function DefaultTemplate() {
 
     return (
         <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <ResponsiveAppBar />
-          <SnackbarProvider maxSnack={3} autoHideDuration={5000}>
-            <div className="m-4">
-              <div className="mb-4">
-                <PathBreadcrumbs />
+          <UserContext.Provider value={{ id: localStorage.getItem('userId') ?? null }}>
+            <CssBaseline />
+            <ResponsiveAppBar />
+            <SnackbarProvider maxSnack={3} autoHideDuration={5000}>
+              <div className="m-4">
+                <div className="mb-4">
+                  <PathBreadcrumbs />
+                </div>
+                  <Outlet />
               </div>
-              <UserContext.Provider value={{ id: localStorage.getItem('userId') ?? null }}>
-                <Outlet />
-              </UserContext.Provider>
-            </div>
-          </SnackbarProvider>
+            </SnackbarProvider>
+          </UserContext.Provider>
         </ThemeProvider>
     )
 }
