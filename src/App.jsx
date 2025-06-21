@@ -1,10 +1,14 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import DefaultTemplate from "./pages/DefaultTemplate";
+import DefaultLayout from "./pages/DefaultLayout";
 import ProductsPage from "./pages/ProductsPage";
 import ChartsPage from "./pages/ChartsPage"
 import axios from "axios";
 import ProductPage from "./pages/ProductPage";
 import PageNotFound from "./pages/PageNotFound";
+import ProductCategoriesPage from "./pages/ProductCategoriesPage";
+import ProductCategoryPage from "./pages/ProductCategoryPage";
+import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
 
 export default function App() {
   axios.defaults.baseURL = 'http://localhost:3000'
@@ -12,15 +16,31 @@ export default function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <DefaultTemplate />,
+      element: <DefaultLayout />,
       children: [
         {
           path: "/",
           element: <ChartsPage/>
         },
         {
+          path: "/login",
+          element: <LoginPage />
+        },
+        {
+          path: "/signup",
+          element: <SignupPage />
+        },
+        {
           path: "/produtos",
           element: <ProductsPage />
+        },
+        {
+          path: "/produtos/categorias",
+          element: <ProductCategoriesPage />
+        },
+        {
+          path: "/produtos/categorias/:id",
+          element: <ProductCategoryPage />
         },
         {
           path: '/produtos/:id',
@@ -35,6 +55,6 @@ export default function App() {
   ])
 
   return (
-    <RouterProvider router={router}/>
+    <RouterProvider router={router} />
   );
 }
