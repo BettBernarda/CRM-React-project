@@ -96,7 +96,7 @@ export default function ProductCategoryPage() {
       return false
     }
 
-    if (category.nome.length > 3) {
+    if (category.nome.length < 3) {
       showMessageError('Nome da categoria deve ter pelo menos 3 caracteres!')
       return false
     }
