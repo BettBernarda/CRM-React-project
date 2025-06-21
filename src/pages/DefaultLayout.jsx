@@ -22,7 +22,7 @@ export default function DefaultLayout() {
                 <div className="mb-4">
                   <PathBreadcrumbs />
                 </div>
-                  <Outlet />
+                <Outlet />
               </div>
             </SnackbarProvider>
           </UserContext.Provider>
