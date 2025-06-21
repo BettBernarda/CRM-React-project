@@ -2,10 +2,13 @@ import Typography from '@mui/material/Typography';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { UserContext } from '../context';
 
 export default function PathBreadcrumbs() {
   const navigate = useNavigate()
   const location = useLocation()
+  const userContext = useContext(UserContext)
   
   const findPaths = () => {
     const splitPath = location.pathname.split('/').filter(e => e).map(e => e[0].toUpperCase() + e.substring(1))
@@ -34,6 +37,10 @@ export default function PathBreadcrumbs() {
     navigate(path)
   };
   
+  if (!userContext.id) {
+    return
+  }
+
   return (
     <div role="presentation">
       <Breadcrumbs aria-label="breadcrumb">
