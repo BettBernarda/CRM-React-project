@@ -25,24 +25,7 @@ export default function SignupPage() {
   const handleSignup = async (e) => {
     e.preventDefault()
 
-    if (!user.nome) {
-      showMessageError('É necessário preencher o nome!')
-      return
-    }
-
-    if (!user.email) {
-      showMessageError('É necessário preencher o email!')
-      return
-    }
-
-    if (user.senha !== confirmedPassword) {
-      showMessageError('Ambas as senhas devem ser iguais!')
-      return
-    }
-
-    const userWithSameEmail = (await axios.get(`/usuarios?email=${user.email}`)).data
-    if (userWithSameEmail.length) {
-      showMessageError('Já existe um usuário cadastrado com este Email!')
+    if (!await validateForm()) {
       return
     }
 
@@ -53,6 +36,31 @@ export default function SignupPage() {
       showMessageSuccess('Cadastro realizado com sucesso!')
       login()
     }
+  }
+
+  const validateForm = async () => {
+    if (!user.nome) {
+      showMessageError('É necessário preencher o nome!')
+      return false
+    }
+
+    if (!user.email) {
+      showMessageError('É necessário preencher o email!')
+      return false
+    }
+
+    if (user.senha !== confirmedPassword) {
+      showMessageError('Ambas as senhas devem ser iguais!')
+      return false
+    }
+
+    const userWithSameEmail = (await axios.get(`/usuarios?email=${user.email}`)).data
+    if (userWithSameEmail.length) {
+      showMessageError('Já existe um usuário cadastrado com este Email!')
+      return false
+    }
+
+    return true
   }
 
   const login = async () => {
