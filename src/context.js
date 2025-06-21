@@ -4,7 +4,7 @@ export const UserContext = createContext()
 
 export const logout = (userContext, navigate) => {
   userContext.id = null
-  localStorage.removeItem('userId')
+  sessionStorage.removeItem('userId')
 
   if (navigate) {
     navigate('/login')

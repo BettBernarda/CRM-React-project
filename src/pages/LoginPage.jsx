@@ -31,7 +31,7 @@ export default function LoginPage() {
     }
 
     loggedUser.id = actualUser.id
-    localStorage.setItem('userId', actualUser.id)
+    sessionStorage.setItem('userId', actualUser.id)
     showMessageSuccess('Login realizado com sucesso!')
 
     navigate(`/${redirect}`)
