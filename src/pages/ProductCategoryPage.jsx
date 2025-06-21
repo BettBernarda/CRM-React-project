@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { showMessageError, showMessageSuccess } from "../utils/notification-utils";
 import { v4 as uuidv4 } from 'uuid'
+import RequireLogin from "../components/RequireLogin";
 
 export default function ProductCategoryPage() {
   const navigate = useNavigate()
@@ -29,10 +30,10 @@ export default function ProductCategoryPage() {
     }
 
 
-    setCategory({ ...category, updated_at: new Date() })
+    const now = new Date()
 
     if (id != 'novo') {
-      axios.patch(`/categorias_produto/${id}`, category)
+      axios.patch(`/categorias_produto/${id}`, { ...category, updated_at: now })
         .then(() => {
           showMessageSuccess('Categoria salva com sucesso!');
           navigate(`/produtos/categorias/${id}`)
@@ -42,9 +43,7 @@ export default function ProductCategoryPage() {
           console.log(err)
         })
     } else {
-      setCategory({ ...category, created_at: category.updated_at })
-
-      axios.post(`/categorias_produto`, category)
+      axios.post(`/categorias_produto`, { ...category, created_at: now, updated_at: now })
         .then(response => {
           showMessageSuccess('Categoria salva com sucesso!');
           navigate(`/produtos/categorias/${response.data.id}`)
