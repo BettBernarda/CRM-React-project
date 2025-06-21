@@ -51,6 +51,14 @@ export default function LoginPage() {
     navigate(`/${redirect}`)
   }
 
+  const goToSignup = () => {
+    if (redirect) {
+      navigate(`/signup?redirect=${redirect}`)
+    } else {
+      navigate(`/signup`)
+    }
+  }
+
   return (
     <Box className="flex justify-center mt-10">
       <Card sx={{ width: '600px', maxWidth: '75vw' }}>
