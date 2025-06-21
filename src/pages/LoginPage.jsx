@@ -66,6 +66,7 @@ export default function LoginPage() {
         <CardContent>
           <Box
             component="form"
+            noValidate
             onSubmit={handleSignin}
             sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
           >
