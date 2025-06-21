@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import { showMessageError } from "../utils/notification-utils"
 import { login, UserContext } from "../context"
-import { Box, Button, Card, CardContent, CardHeader, TextField } from "@mui/material"
+import { Box, Button, Card, CardContent, CardHeader, TextField, Typography } from "@mui/material"
 import { Link, useNavigate, useSearchParams } from "react-router-dom"
 
 export default function LoginPage() {
@@ -43,7 +43,10 @@ export default function LoginPage() {
   }
 
   return (
-    <Box className="flex justify-center mt-10">
+    <Box className="flex justify-center items-center mt-10 flex-col">
+      <div className="m-10">
+        <Typography variant="h2">Bem vindo de volta!</Typography>
+      </div>
       <Card sx={{ width: '600px', maxWidth: '75vw' }}>
         <CardHeader title="Fazer login" />
         <CardContent>
