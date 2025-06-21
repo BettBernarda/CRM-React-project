@@ -43,7 +43,7 @@
       "status": true,
       "nome": "Coca-Cola 2L",
       "descricao": "Refrigerante sabor cola",
-      "preco": 8.9,
+      "preco": 10,
       "categoria_id": 1,
       "fornecedor_id": 1,
       "created_at": "2024-01-15T09:00:00Z",
@@ -54,7 +54,7 @@
       "status": true,
       "nome": "Batata Chips",
       "descricao": "Batata frita em pacote",
-      "preco": 5.5,
+      "preco": 1,
       "categoria_id": 2,
       "fornecedor_id": 2,
       "created_at": "2024-01-16T09:00:00Z",
@@ -94,6 +94,14 @@
       "email": "adoado@viado.com",
       "nome": "ADADA",
       "senha": "123"
+    },
+    {
+      "id": "22a78fec-c087-41a1-bb8e-16cfa62e18ae",
+      "nome": "Bettina",
+      "email": "bettinabernarda@gmail.com",
+      "senha": "12345678",
+      "created_at": "2025-06-21T17:07:56.442Z",
+      "updated_at": "2025-06-21T17:07:56.442Z"
     }
   ],
   "clientes": [
@@ -119,18 +127,20 @@
     {
       "id": "2",
       "cliente_id": 2,
-      "data_hora": "2024-06-11T15:45:00Z"
+      "data_hora": "2024-09-11T15:45:00Z"
     }
   ],
   "venda_itens": [
     {
       "venda_id": 1,
-      "produto_id": 1,
+      "produto_id": "98d7d4af-ca7f-4b13-b71e-f49c0c16d954",
+      "quantidade": 2,
       "id": "680c"
     },
     {
-      "venda_id": 1,
-      "produto_id": 2,
+      "venda_id": 2,
+      "produto_id": "9f8834e0-62c9-40c0-b3a2-8418b87cd351",
+      "quantidade": 1,
       "id": "361e"
     }
   ],
