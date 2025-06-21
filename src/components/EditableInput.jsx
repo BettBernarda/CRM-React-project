@@ -1,6 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 
+
+
+export const formatCurrency = (val) => {
+        const num = Number(val.replace(/\D/g, '')) / 100;
+        return num.toLocaleString('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+        });
+    };
+
+    
 export default function EditableInput() {
     const currentYear = new Date().getFullYear();
     const [isEditMode, setIsEditMode] = useState(false);
@@ -9,13 +20,6 @@ export default function EditableInput() {
     const inputRef = useRef(null);
     const api = 'http://localhost:3000/Metas';
 
-    const formatCurrency = (val) => {
-        const num = Number(val.replace(/\D/g, '')) / 100;
-        return num.toLocaleString('pt-BR', {
-            style: 'currency',
-            currency: 'BRL',
-        });
-    };
 
     const parseCurrency = (formatted) => {
         return formatted.replace(/\D/g, '');
