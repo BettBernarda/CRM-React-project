@@ -13,7 +13,7 @@ export default function SimpleSnackbar({ open, message, onClose }) {
         size="small"
         aria-label="close"
         color="inherit"
-        onClick={onClose} // Use onClose prop for closing
+        onClick={onClose}
       >
         <CloseIcon fontSize="small" />
       </IconButton>
@@ -22,15 +22,13 @@ export default function SimpleSnackbar({ open, message, onClose }) {
 
   return (
     <div>
-      {/* Remove the "Open Snackbar" button as the parent controls it */}
-      {/* <Button onClick={handleClick}>Open Snackbar</Button> */}
       <Snackbar
-        open={open} // Use the prop 'open'
+        open={open} 
         autoHideDuration={2000}
-        onClose={onClose} // Use the prop 'onClose'
-        message={message} // Use the prop 'message'
+        onClose={onClose} 
+        message={message} 
         anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-        action={action} // Include the action for the close button
+        action={action} 
       />
     </div>
   );
