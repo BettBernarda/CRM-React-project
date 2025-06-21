@@ -51,6 +51,10 @@ export default function ResponsiveAppBar() {
     logout(userContext, navigate)
   }
 
+  if (!userContext.id) {
+    return
+  }
+
   return (
     <AppBar className="mb-3" position="static">
       <Container maxWidth="xl">
