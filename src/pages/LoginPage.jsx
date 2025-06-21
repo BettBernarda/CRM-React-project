@@ -1,7 +1,6 @@
-import axios from "axios"
 import { useContext, useEffect, useState } from "react"
-import { showMessageError, showMessageSuccess } from "../utils/notification-utils"
-import { UserContext } from "../context"
+import { showMessageError } from "../utils/notification-utils"
+import { login, UserContext } from "../context"
 import { Box, Button, Card, CardContent, CardHeader, TextField } from "@mui/material"
 import { Link, useNavigate, useSearchParams } from "react-router-dom"
 
@@ -32,23 +31,7 @@ export default function LoginPage() {
       return
     }
 
-    login()
-  }
-
-  const login = async () => {
-    const result = await axios.get(`/usuarios?email=${user.email}&senha=${user.senha}&ativo=true`)
-    const actualUser = result.data[0]
-
-    if (!actualUser) {
-      showMessageError('Não existe usuário com este cadastro')
-      return
-    }
-
-    loggedUser.id = actualUser.id
-    sessionStorage.setItem('userId', actualUser.id)
-    showMessageSuccess('Login realizado com sucesso!')
-
-    navigate(`/${redirect}`)
+    login(user, loggedUser, navigate, redirect)
   }
 
   const goToSignup = () => {

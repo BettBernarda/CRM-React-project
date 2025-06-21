@@ -1,7 +1,7 @@
 import axios from "axios"
 import { useContext, useEffect, useState } from "react"
 import { showMessageError, showMessageSuccess } from "../utils/notification-utils"
-import { UserContext } from "../context"
+import { login, UserContext } from "../context"
 import { Box, Button, Card, CardContent, CardHeader, TextField } from "@mui/material"
 import { Link, useNavigate, useSearchParams } from "react-router-dom"
 import { v4 as uuidv4 } from "uuid"
@@ -34,7 +34,7 @@ export default function SignupPage() {
 
     if (result.data) {
       showMessageSuccess('Cadastro realizado com sucesso!')
-      login()
+      login(user, loggedUser, navigate, redirect)
     }
   }
 
@@ -61,22 +61,6 @@ export default function SignupPage() {
     }
 
     return true
-  }
-
-  const login = async () => {
-    const result = await axios.get(`/usuarios?email=${user.email}&senha=${user.senha}&ativo=true`)
-    const actualUser = result.data[0]
-
-    if (!actualUser) {
-      showMessageError('Não existe usuário com este cadastro')
-      return
-    }
-
-    loggedUser.id = actualUser.id
-    sessionStorage.setItem('userId', actualUser.id)
-    showMessageSuccess('Login realizado com sucesso!')
-
-    navigate(`/${redirect}`)
   }
 
   const goToLogin = () => {

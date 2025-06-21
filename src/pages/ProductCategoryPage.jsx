@@ -96,6 +96,11 @@ export default function ProductCategoryPage() {
       return false
     }
 
+    if (category.nome.length < 3) {
+      showMessageError('Nome da categoria deve ter pelo menos 3 caracteres!')
+      return false
+    }
+
     if (!category.descricao) {
       showMessageError('É neecssário preencher a descrição da categoria!')
       return false
@@ -113,6 +118,7 @@ export default function ProductCategoryPage() {
           <CardContent>
             <Box
               component="form"
+              noValidate
               onSubmit={handleSave}
               sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
             >
