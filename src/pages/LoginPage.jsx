@@ -3,25 +3,26 @@ import { useContext, useEffect, useState } from "react"
 import { showMessageError, showMessageSuccess } from "../utils/notification-utils"
 import { UserContext } from "../context"
 import { Box, Button, Card, CardContent, CardHeader, TextField } from "@mui/material"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate, useSearchParams } from "react-router-dom"
 
 export default function LoginPage() {
   const [user, setUser] = useState({})
   const loggedUser = useContext(UserContext)
 
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const redirect = searchParams.get('redirect') ?? ''
 
   useEffect(() => {
-    console.log(loggedUser.id)
     if (loggedUser.id) {
-      navigate('/')
+      navigate(`/${redirect}`)
     }
-  }, [loggedUser, navigate])
+  }, [loggedUser, navigate, redirect])
   
   const handleSignin = async (e) => {
     e.preventDefault()
 
-    const result = await axios.get(`/usuarios?email=${user.email}&senha=${user.senha}`)
+    const result = await axios.get(`/usuarios?email=${user.email}&senha=${user.senha}&ativo=true`)
     const actualUser = result.data[0]
 
     if (!actualUser) {
@@ -32,7 +33,8 @@ export default function LoginPage() {
     loggedUser.id = actualUser.id
     localStorage.setItem('userId', actualUser.id)
     showMessageSuccess('Login realizado com sucesso!')
-    navigate('/')
+
+    navigate(`/${redirect}`)
   }
 
   return (
