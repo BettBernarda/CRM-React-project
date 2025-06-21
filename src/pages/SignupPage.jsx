@@ -25,7 +25,7 @@ export default function SignupPage() {
   const handleSignup = async (e) => {
     e.preventDefault()
 
-    if (!await validateForm()) {
+    if (!await validateSignup()) {
       return
     }
 
@@ -38,7 +38,7 @@ export default function SignupPage() {
     }
   }
 
-  const validateForm = async () => {
+  const validateSignup = async () => {
     if (!user.nome) {
       showMessageError('É necessário preencher o nome!')
       return false
