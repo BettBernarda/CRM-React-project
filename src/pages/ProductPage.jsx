@@ -40,10 +40,10 @@ export default function ProductPage() {
     }
 
 
-    setProduct({ ...product, updated_at: new Date() })
+    const now = new Date()
 
     if (id != 'novo') {
-      axios.patch(`/produtos/${id}`, product)
+      axios.patch(`/produtos/${id}`, { ...product, updated_at: now })
         .then(() => {
           showMessageSuccess('Produto salvo com sucesso!');
           navigate(`/produtos/${id}`)
@@ -53,9 +53,7 @@ export default function ProductPage() {
           console.log(err)
         })
     } else {
-      setProduct({ ...product, created_at: product.updated_at })
-
-      axios.post(`/produtos`, product)
+      axios.post(`/produtos`, { ...product, upadted_at: now, created_at: now })
         .then(response => {
           showMessageSuccess('Produto salvo com sucesso!');
           navigate(`/produtos/${response.data.id}`)
