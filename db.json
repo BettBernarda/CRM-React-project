@@ -1,4 +1,10 @@
 {
+  "Metas": [
+    {
+      "id": "2025",
+      "value": 23231.2
+    }
+  ],
   "fornecedores": [
     {
       "id": "1",
@@ -35,20 +41,16 @@
       "descricao": "Lanches e salgadinhos",
       "created_at": "2024-01-11T08:00:00Z",
       "updated_at": "2024-06-01T08:30:00Z"
+    },
+    {
+      "id": "eee7bc49-53f2-480b-8a7d-8c245e22ad3a",
+      "nome": "categoria nova",
+      "descricao": "aa",
+      "created_at": "2025-06-21T17:15:10.513Z",
+      "updated_at": "2025-06-21T17:15:10.513Z"
     }
   ],
   "produtos": [
-    {
-      "id": "98d7d4af-ca7f-4b13-b71e-f49c0c16d954",
-      "status": true,
-      "nome": "Coca-Cola 2L",
-      "descricao": "Refrigerante sabor cola",
-      "preco": 10,
-      "categoria_id": 1,
-      "fornecedor_id": 1,
-      "created_at": "2024-01-15T09:00:00Z",
-      "updated_at": "2024-06-01T09:00:00Z"
-    },
     {
       "id": "9f8834e0-62c9-40c0-b3a2-8418b87cd351",
       "status": true,
@@ -133,7 +135,7 @@
   "venda_itens": [
     {
       "venda_id": 1,
-      "produto_id": "98d7d4af-ca7f-4b13-b71e-f49c0c16d954",
+      "produto_id": "b2d42215-9a4d-4405-af4c-c12571ee9289",
       "quantidade": 2,
       "id": "680c"
     },
@@ -142,44 +144,6 @@
       "produto_id": "9f8834e0-62c9-40c0-b3a2-8418b87cd351",
       "quantidade": 1,
       "id": "361e"
-    }
-  ],
-  "historico_compras": [
-    {
-      "id": "1",
-      "usuario_id": 1,
-      "produto_id": 1,
-      "quantidade": 10,
-      "data_compra": "2024-06-01T10:00:00Z"
-    },
-    {
-      "id": "2",
-      "usuario_id": 2,
-      "produto_id": 2,
-      "quantidade": 5,
-      "data_compra": "2024-06-01T10:10:00Z"
-    }
-  ],
-  "promocoes": [
-    {
-      "id": "1",
-      "produto_id": 1,
-      "descricao": "Promoção Coca",
-      "preco_promocional": 7.99,
-      "data_inicio": "2024-06-01",
-      "data_fim": "2024-06-30",
-      "created_at": "2024-05-31T10:00:00Z",
-      "updated_at": "2024-06-01T10:00:00Z"
-    },
-    {
-      "id": "2",
-      "produto_id": 2,
-      "descricao": "Snack em Dobro",
-      "preco_promocional": 4.99,
-      "data_inicio": "2024-06-05",
-      "data_fim": "2024-06-25",
-      "created_at": "2024-06-01T11:00:00Z",
-      "updated_at": "2024-06-01T11:10:00Z"
     }
   ]
 }
