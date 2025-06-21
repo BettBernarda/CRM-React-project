@@ -8,7 +8,6 @@ export default function Chartspage() {
     
     <div id="Container">
       <RequireLogin />
-      <ChartLine />
       <div id="lineOne" className='flex flex-row'>
         <ChartLine className="basis-64" />
         <div id="Side numbers" className="basis-120 flex-col">
