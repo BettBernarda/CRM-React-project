@@ -14,7 +14,7 @@ export default function DefaultLayout() {
 
     return (
         <ThemeProvider theme={theme}>
-          <UserContext.Provider value={{ id: localStorage.getItem('userId') ?? null }}>
+          <UserContext.Provider value={{ id: sessionStorage.getItem('userId') ?? null }}>
             <CssBaseline />
             <ResponsiveAppBar />
             <SnackbarProvider maxSnack={3} autoHideDuration={5000}>
