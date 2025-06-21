@@ -10,6 +10,7 @@ import ProductCategoryPage from "./pages/ProductCategoryPage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import SalesPage from "./pages/SalesPage";
+import SalePage from "./pages/SalePage";
 
 export default function App() {
   axios.defaults.baseURL = 'http://localhost:3000'
@@ -50,6 +51,10 @@ export default function App() {
         {
           path: '/vendas',
           element: <SalesPage />
+        },
+        {
+          path: '/vendas/:id',
+          element: <SalePage />
         },
         {
           path: '*',
