@@ -71,6 +71,7 @@ export default function LoginPage() {
           >
             <TextField
               label="Email"
+              id="email"
               variant="outlined"
               value={user.email}
               required
@@ -79,6 +80,7 @@ export default function LoginPage() {
             />
             <TextField
               label="Sehna"
+              id="password"
               variant="outlined"
               value={user.senha}
               required
@@ -94,7 +96,7 @@ export default function LoginPage() {
             </Box>
             <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
               Não tem uma conta?
-              <Link className='hover:cursor-pointer' underline="hover" color="inherit">
+              <Link className='hover:cursor-pointer' underline="hover" color="inherit" onClick={goToSignup}>
                 Cadastre-se
               </Link>
             </Box>
