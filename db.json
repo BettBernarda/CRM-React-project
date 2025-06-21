@@ -2,7 +2,7 @@
   "Metas": [
     {
       "id": "2025",
-      "value": 1020000131.23
+      "value": 23231.2
     }
   ],
   "fornecedores": [
@@ -144,44 +144,6 @@
       "produto_id": "9f8834e0-62c9-40c0-b3a2-8418b87cd351",
       "quantidade": 1,
       "id": "361e"
-    }
-  ],
-  "historico_compras": [
-    {
-      "id": "1",
-      "usuario_id": 1,
-      "produto_id": 1,
-      "quantidade": 10,
-      "data_compra": "2024-06-01T10:00:00Z"
-    },
-    {
-      "id": "2",
-      "usuario_id": 2,
-      "produto_id": 2,
-      "quantidade": 5,
-      "data_compra": "2024-06-01T10:10:00Z"
-    }
-  ],
-  "promocoes": [
-    {
-      "id": "1",
-      "produto_id": 1,
-      "descricao": "Promoção Coca",
-      "preco_promocional": 7.99,
-      "data_inicio": "2024-06-01",
-      "data_fim": "2024-06-30",
-      "created_at": "2024-05-31T10:00:00Z",
-      "updated_at": "2024-06-01T10:00:00Z"
-    },
-    {
-      "id": "2",
-      "produto_id": 2,
-      "descricao": "Snack em Dobro",
-      "preco_promocional": 4.99,
-      "data_inicio": "2024-06-05",
-      "data_fim": "2024-06-25",
-      "created_at": "2024-06-01T11:00:00Z",
-      "updated_at": "2024-06-01T11:10:00Z"
     }
   ]
 }
