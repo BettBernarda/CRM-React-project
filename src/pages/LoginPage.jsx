@@ -22,6 +22,20 @@ export default function LoginPage() {
   const handleSignin = async (e) => {
     e.preventDefault()
 
+    if (!user.email) {
+      showMessageError('Informe seu Email!')
+      return
+    }
+
+    if (!user.senha) {
+      showMessageError('Informe sua senha!')
+      return
+    }
+
+    login()
+  }
+
+  const login = async () => {
     const result = await axios.get(`/usuarios?email=${user.email}&senha=${user.senha}&ativo=true`)
     const actualUser = result.data[0]
 
