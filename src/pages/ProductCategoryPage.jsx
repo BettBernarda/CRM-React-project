@@ -114,7 +114,7 @@ export default function ProductCategoryPage() {
       <RequireLogin />
       <Box className="flex justify-center mt-10">
         <Card sx={{ width: '50vw', minWidth: '300px' }}>
-          <CardHeader title={id === 'novo' ? "Novo Produto" : "Editar Produto"} />
+          <CardHeader title={id === 'novo' ? "Nova Categoria" : "Editar Categoria"} />
           <CardContent>
             <Box
               component="form"
