@@ -72,6 +72,8 @@ export default function SalePage() {
         })
         .catch(() => showMessageError('Ocorreu um erro ao salvar a venda'))
     }
+
+    // TODO: implementar lógica para alterar a quantidade disponível dos produtos que foram vendidos
   }
 
   const handleNew = () => {
