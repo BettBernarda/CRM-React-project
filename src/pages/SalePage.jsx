@@ -226,7 +226,7 @@ export default function SalePage() {
                 </Card>
               ))}
 
-              <Button variant="outlined" color="primary" onClick={() => setSaleItemsList([ ...saleItemsList, { id: uuidv4() }])}>
+              <Button variant="outlined" color="primary" onClick={() => setSale({...sale, itens: [ ...sale.itens, { id: (sale.itens[(sale.itens.length || 1)- 1]?.id ?? 0) + 1 }] })}>
                 <AddIcon />Adicionar item
               </Button>
 
