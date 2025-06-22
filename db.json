@@ -124,26 +124,24 @@
     {
       "id": "1",
       "cliente_id": 1,
+      "itens": [
+        {
+          "produto_id": "b2d42215-9a4d-4405-af4c-c12571ee9289",
+          "quantidade": 2
+        }
+      ],
       "data_hora": "2024-06-10T14:30:00Z"
     },
     {
       "id": "2",
       "cliente_id": 2,
+      "itens": [
+        {
+          "produto_id": "9f8834e0-62c9-40c0-b3a2-8418b87cd351",
+          "quantidade": 1
+        }
+      ],
       "data_hora": "2024-09-11T15:45:00Z"
-    }
-  ],
-  "venda_itens": [
-    {
-      "venda_id": 1,
-      "produto_id": "b2d42215-9a4d-4405-af4c-c12571ee9289",
-      "quantidade": 2,
-      "id": "680c"
-    },
-    {
-      "venda_id": 2,
-      "produto_id": "9f8834e0-62c9-40c0-b3a2-8418b87cd351",
-      "quantidade": 1,
-      "id": "361e"
     }
   ]
 }

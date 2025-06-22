@@ -12,52 +12,50 @@ export default function SalePage() {
 
   const [customersList, setCustomersList] = useState([])
   const [productsList, setProductsList] = useState([])
-  const [saleItemsList, setSaleItemsList] = useState([])
 
   let { id } = useParams()
   const [sale, setSale] = useState({
     id: id != 'novo' ? id : uuidv4(),
     cliente_id: null,
-    data_hora: new Date()
+    data_hora: new Date(),
+    itens: []
   })
 
   useEffect(() => {
     if (id != 'novo') {
       axios.get(`/vendas/${id}`).then(result => setSale(result.data))
-      axios.get(`/venda_itens?venda_id=${id}`).then(result => setSaleItemsList(result.data))
     }
 
     axios.get('/clientes').then(result => setCustomersList(result.data))
     axios.get('/produtos').then(result => setProductsList(result.data))
   }, [id])
 
-  const handleSave = (e) => {
+  const handleSave = async (e) => {
     e.preventDefault()
 
-    if (!validateForm()) {
+    if (!await validateForm()) {
       return
     }
-
 
     const now = new Date()
 
     if (id != 'novo') {
-      axios.patch(`/produtos/${id}`, { ...sale, updated_at: now })
+      axios.patch(`/vendas/${id}`, { ...sale, updated_at: now })
         .then(() => {
-          showMessageSuccess('Produto salvo com sucesso!');
-          navigate(`/produtos/${id}`)
+          showMessageSuccess('Venda salva com sucesso!');
+          navigate(`/vendas/${id}`)
         })
         .catch((err) => {
-          showMessageError('Ocorreu um erro ao salvar o produto')
+          showMessageError('Ocorreu um erro ao salvar a venda')
           console.log(err)
         })
     } else {
-      axios.post(`/produtos`, { ...sale, created_at: now, updated_at: now })
+      axios.post(`/vendas`, { ...sale, created_at: now, updated_at: now })
         .then(response => {
-          showMessageSuccess('Produto salvo com sucesso!');
-          navigate(`/produtos/${response.data.id}`)
+          showMessageSuccess('Venda salva com sucesso!');
+          navigate(`/vendas/${response.data.id}`)
         })
-        .catch(() => showMessageError('Ocorreu um erro ao salvar o produto'))
+        .catch(() => showMessageError('Ocorreu um erro ao salvar a venda'))
     }
   }
 
@@ -67,12 +65,9 @@ export default function SalePage() {
     navigate('/produtos/novo')
     setSale({
       id: sale.id,
-      nome: '',
-      status: true,
-      descricao: '',
-      preco: 0,
-      categoria_id: null,
-      fornecedor_id: null
+      cliente_id: null,
+      data_hora: new Date(),
+      itens: []
     })
   }
 
@@ -80,42 +75,88 @@ export default function SalePage() {
     if (id == 'novo') {
       setSale({
         id: sale.id,
-        nome: '',
-        status: true,
-        descricao: '',
-        preco: 0,
-        categoria_id: null,
-        fornecedor_id: null
+        cliente_id: null,
+        data_hora: new Date(),
+        itens: []
       })
 
       showMessageSuccess('Produto excluído com sucesso!')
       return
     }
 
-    axios.delete(`/produtos/${id}`)
+    axios.delete(`/vendas/${id}`)
       .then(() => {
-        showMessageSuccess('Produto excluído com sucesso!')
-        navigate('/produtos/novo')
+        showMessageSuccess('Venda excluída com sucesso!')
+        navigate('/vendas/novo')
       })
       .catch(() => {
-        showMessageError('Ocorreu um erro ao excluir o produto')
+        showMessageError('Ocorreu um erro ao excluir a venda')
       })
   }
 
-  const validateForm = () => {
+  const validateForm = async () => {
+    if (!sale.cliente_id) {
+      showMessageError('É necessário selecionar um cliente!')
+      return false
+    }
+
+    if (!sale.data_hora) {
+      showMessageError('É necessário preencher a data da venda!')
+      return false
+    }
+
+    if (!sale.data_hora > new Date()) {
+      showMessageError('Data da venda não pode ser inferior a data atual!')
+    }
+
+    for (let item of sale.itens) {
+      if (item.qtde < 0) {
+        showMessageError('Quantidade do produto deve ser maior que zero')
+        return false
+      }
+
+      let product
+      
+      try {
+        product = (await axios.get(`/produtos/${item.produto_id}`)).data
+      } catch { /* empty */ }
+
+      if (!product) {
+        showMessageError('Produto inválido selecionado!')
+        return false
+      }
+
+      if (product.qtde < item.qtde) {
+        showMessageError(`Quantidade indisponível para o produto ${product.nome}!`)
+        return false
+      }
+    }
+
     return true
   }
 
   const handleSelectProduct = (saleItem, value) => {
-    const newSaleItemsList = saleItemsList.slice()
-
-    newSaleItemsList.map(item => {
+    const itens = sale.itens.map(item => {
       if (item == saleItem) {
-        item.produto_id = value
+        item.produto_id = value.id
       }
 
       return item
     })
+
+    setSale({ ...sale, itens })
+  }
+
+  const handleSetQtdeItem = (saleItem, qtde) => {
+    const itens = sale.itens.map(item => {
+      if (item == saleItem) {
+        item.qtde = parseInt(qtde)
+      }
+
+      return item
+    })
+
+    setSale({ ...sale, itens })
   }
 
   return (
