@@ -61,6 +61,8 @@ export default function SalePage() {
     }
   }
 
+  const listToOptions = (list) => list.reduce((options, item) => [ ...options, { label: item.nome, id: item.id }], [])
+
   const handleNew = () => {
     navigate('/produtos/novo')
     setSale({
@@ -104,7 +106,17 @@ export default function SalePage() {
     return true
   }
 
-  const handleSelectItem = () => {}
+  const handleSelectProduct = (saleItem, value) => {
+    const newSaleItemsList = saleItemsList.slice()
+
+    newSaleItemsList.map(item => {
+      if (item == saleItem) {
+        item.produto_id = value
+      }
+
+      return item
+    })
+  }
 
   return (
     <>
@@ -118,88 +130,30 @@ export default function SalePage() {
               onSubmit={handleSave}
               sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
             >
-              <TextField
-                label="Nome"
-                variant="outlined"
-                value={sale.nome}
-                required
-                onChange={(e) => setSale({ ...sale, nome: e.target.value })}
+              <Autocomplete
                 fullWidth
+                disablePortal
+                options={listToOptions(customersList)}
+                renderInput={(params) => <TextField {...params} fullWidth label="Cliente"/>}
+                onChange={(e, value) => setSale({ ...sale, cliente_id: value.id })}
               />
-              <TextField
-                label="Descrição"
-                variant="outlined"
-                value={sale.descricao}
-                required
-                onChange={(e) => setSale({ ...sale, descricao: e.target.value })}
-                fullWidth
-              />
-              <TextField
-                label="Preço"
-                variant="outlined"
-                type="number"
-                value={sale.preco}
-                required
-                onChange={(e) => setSale({ ...sale, preco: parseFloat(e.target.value) })}
-                fullWidth
-              />
-              <FormControl fullWidth>
-                <InputLabel id="fornecedor-label">Fornecedor</InputLabel>
-                <Select
-                  labelId="fornecedor-label"
-                  value={sale.fornecedor_id}
-                  label="Fornecedor"
-                  onChange={(e) => setSale({ ...sale, fornecedor_id: e.target.value })}
-                >
-                  {customersList.map(fornecedor => (
-                    <MenuItem value={fornecedor.id} key={fornecedor.id}>
-                      {fornecedor.nome}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-              <FormControl fullWidth>
-                <InputLabel id="categoria-label">Categoria</InputLabel>
-                <Select
-                  labelId="categoria-label"
-                  value={sale.categoria_id}
-                  label="Categoria"
-                  onChange={(e) => setSale({ ...sale, categoria_id: e.target.value })}
-                >
-                  {productsList.map(categoria => (
-                    <MenuItem value={categoria.id} key={categoria.id}>
-                      {categoria.nome}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-
+              
               {saleItemsList.map(item => (
-                <Card variant="outlined" className="p-2 flex flex-row gap-2">
-                  <FormControl fullWidth>
-                    <InputLabel id="categoria-label">Produto</InputLabel>
-                    <Select
-                      labelId="categoria-label"
-                      value={item.produto_id}
-                      label="Categoria"
-                      onChange={handleSelectItem}
-                    >
-                      {productsList.map(categoria => (
-                        <MenuItem value={categoria.id} key={categoria.id}>
-                          {categoria.nome}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
+                <Card variant="outlined" className="p-2 flex flex-row gap-2" key={item.id}>
+                  <Autocomplete
+                    fullWidth
+                    disablePortal
+                    options={listToOptions(productsList)}
+                    renderInput={(params) => <TextField {...params} fullWidth label="Produto"/>}
+                    onChange={(product) => handleSelectProduct(item, product)}
+                  />
 
                   <TextField
-                    label="Preço"
+                    label="Quantidade"
                     variant="outlined"
                     type="number"
-                    value={sale.preco}
+                    value={item.qtde}
                     required
-                    onChange={(e) => setSale({ ...sale, preco: parseFloat(e.target.value) })}
-                    fullWidth
                   />
 
                   <Button variant="outlined" color="error" sx={{ minWidth: '120px', width: '10vw', marginLeft: '5%' }} onClick={() => setSaleItemsList(saleItemsList.filter(e => e != item))}>
@@ -208,7 +162,7 @@ export default function SalePage() {
                 </Card>
               ))}
 
-              <Button variant="outlined" color="primary" onClick={() => setSaleItemsList([ ...saleItemsList, {}])}>
+              <Button variant="outlined" color="primary" onClick={() => setSaleItemsList([ ...saleItemsList, { id: uuidv4() }])}>
                 <AddIcon />Adicionar item
               </Button>
 
@@ -217,7 +171,7 @@ export default function SalePage() {
                   Salvar
                 </Button>
                 <Button variant="outlined" color="primary" type="button" onClick={handleNew} fullWidth>
-                  Novo Produto
+                  Nova venda
                 </Button>
               </Box>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}>
