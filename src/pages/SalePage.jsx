@@ -45,8 +45,6 @@ export default function SalePage() {
   fetchData()
 }, [id])
 
-  const findCustomerNameById = id => customersList.find(customer => customer.id == id)?.nome ?? ''
-
   const handleSave = async (e) => {
     e.preventDefault()
 
