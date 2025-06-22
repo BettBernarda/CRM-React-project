@@ -17,6 +17,9 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { logout, UserContext } from '../context';
 import { useContext } from 'react';
+import { useColorScheme } from '@mui/material';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness2Icon from '@mui/icons-material/Brightness2';
 
 const pages = [
   { 'name': 'Home', 'link': '/' },
@@ -27,6 +30,8 @@ const pages = [
 export default function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElTheme, setAnchorElTheme] = React.useState(null);
+  const { mode, setMode } = useColorScheme()
 
   const userContext = useContext(UserContext)
   const navigate = useNavigate()
@@ -38,13 +43,21 @@ export default function ResponsiveAppBar() {
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
-
+  
+  const handleOpenThemeMenu = (event) => {
+    setAnchorElTheme(event.currentTarget);
+  };
+  
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
+  
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+  
+  const handleCloseThemeMenu = () => {
+    setAnchorElTheme(null);
   };
 
   const handleLogout = () => {
@@ -156,6 +169,38 @@ export default function ResponsiveAppBar() {
               </MenuItem>
               <MenuItem onClick={handleLogout}>
                 <Typography sx={{ textAlign: 'center' }}>Logout</Typography>
+              </MenuItem>
+            </Menu>
+          </Box>
+          
+          <Box>
+            <MenuItem onClick={handleOpenThemeMenu} sx={{ ml: '10px' }}>
+                {mode == 'light' ? <Brightness4Icon /> : <Brightness2Icon />}
+            </MenuItem>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElTheme}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElTheme)}
+              onClose={handleCloseThemeMenu}
+            >
+              <MenuItem onClick={() => setMode('light')}>
+                <Typography sx={{ textAlign: 'center' }}>Claro</Typography>
+              </MenuItem>
+              <MenuItem onClick={() => setMode('dark')}>
+                <Typography sx={{ textAlign: 'center' }}>Escuro</Typography>
+              </MenuItem>
+              <MenuItem onClick={() => setMode('system')}>
+                <Typography sx={{ textAlign: 'center' }}>Padrão do Sistema</Typography>
               </MenuItem>
             </Menu>
           </Box>
