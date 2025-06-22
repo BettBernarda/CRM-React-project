@@ -25,7 +25,9 @@ export default function ProductPage() {
 
   useEffect(() => {
     if (id != 'novo') {
-      axios.get(`/produtos/${id}`).then(result => setProduct(result.data))
+      axios.get(`/produtos/${id}`)
+        .then(result => setProduct(result.data))
+        .catch(() => navigate('/produtos/novo'))
     }
 
     axios.get('/fornecedores').then(result => setFornecedoresList(result.data))
