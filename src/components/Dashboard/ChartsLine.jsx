@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { LineChart } from '@mui/x-charts/LineChart';
 import { Snackbar } from '@mui/material'; // This import is not directly used, SimpleSnackbar is.
-import SimpleSnackbar from './SnackBar'; // Corrected import for your custom Snackbar
+import SimpleSnackbar from '../SnackBar'; // Corrected import for your custom Snackbar
 
 function parseAnoMesParaDate(anoMes) {
   const [ano, mes] = anoMes.split('-').map(Number);
