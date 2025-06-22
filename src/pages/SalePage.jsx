@@ -22,13 +22,30 @@ export default function SalePage() {
   })
 
   useEffect(() => {
-    if (id != 'novo') {
-      axios.get(`/vendas/${id}`).then(result => setSale(result.data))
-    }
+  const fetchData = async () => {
+    try {
+      const [customersResponse, productsResponse] = await Promise.all([
+        axios.get('/clientes'),
+        axios.get('/produtos')
+      ])
 
-    axios.get('/clientes').then(result => setCustomersList(result.data))
-    axios.get('/produtos').then(result => setProductsList(result.data))
-  }, [id])
+      setCustomersList(customersResponse.data)
+      setProductsList(productsResponse.data)
+
+      if (id != 'novo') {
+        const saleResponse = await axios.get(`/vendas/${id}`)
+        setSale(saleResponse.data)
+      }
+    } catch (error) {
+      console.error('Erro ao carregar dados', error)
+      showMessageError('Erro ao carregar dados')
+    }
+  }
+
+  fetchData()
+}, [id])
+
+  const findCustomerNameById = id => customersList.find(customer => customer.id == id)?.nome ?? ''
 
   const handleSave = async (e) => {
     e.preventDefault()
@@ -58,8 +75,6 @@ export default function SalePage() {
         .catch(() => showMessageError('Ocorreu um erro ao salvar a venda'))
     }
   }
-
-  const listToOptions = (list) => list.reduce((options, item) => [ ...options, { label: item.nome, id: item.id }], [])
 
   const handleNew = () => {
     navigate('/produtos/novo')
@@ -138,7 +153,7 @@ export default function SalePage() {
   const handleSelectProduct = (saleItem, value) => {
     const itens = sale.itens.map(item => {
       if (item == saleItem) {
-        item.produto_id = value.id
+        item.produto_id = value?.id
       }
 
       return item
@@ -174,19 +189,25 @@ export default function SalePage() {
               <Autocomplete
                 fullWidth
                 disablePortal
-                options={listToOptions(customersList)}
+                value={customersList.find(c => c.id == sale.cliente_id) ?? null}
+                options={customersList}
+                getOptionLabel={(option) => option.nome ?? ''}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
+                onChange={(e, value) => setSale({ ...sale, cliente_id: value?.id ?? null })}
                 renderInput={(params) => <TextField {...params} fullWidth label="Cliente"/>}
-                onChange={(e, value) => setSale({ ...sale, cliente_id: value.id })}
               />
               
-              {saleItemsList.map(item => (
+              {sale.itens.map(item => (
                 <Card variant="outlined" className="p-2 flex flex-row gap-2" key={item.id}>
                   <Autocomplete
                     fullWidth
                     disablePortal
-                    options={listToOptions(productsList)}
+                    value={productsList.find(p => p.id == item.produto_id) ?? null}
+                    options={productsList}
+                    getOptionLabel={(option) => option.nome ?? ''}
+                    isOptionEqualToValue={(option, value) => option.id === value.id}
                     renderInput={(params) => <TextField {...params} fullWidth label="Produto"/>}
-                    onChange={(product) => handleSelectProduct(item, product)}
+                    onChange={(e, product) => handleSelectProduct(item, product)}
                   />
 
                   <TextField
@@ -194,10 +215,11 @@ export default function SalePage() {
                     variant="outlined"
                     type="number"
                     value={item.qtde}
+                    onChange={(e) => handleSetQtdeItem(item, e.target.value)}
                     required
                   />
 
-                  <Button variant="outlined" color="error" sx={{ minWidth: '120px', width: '10vw', marginLeft: '5%' }} onClick={() => setSaleItemsList(saleItemsList.filter(e => e != item))}>
+                  <Button variant="outlined" color="error" sx={{ minWidth: '120px', width: '10vw', marginLeft: '5%' }} onClick={() => setSale({...sale, itens: sale.itens.filter(currItem => currItem != item) })}>
                     <Remove />Remover
                   </Button>
                 </Card>
