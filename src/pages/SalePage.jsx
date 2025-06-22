@@ -125,7 +125,7 @@ export default function SalePage() {
     }
 
     for (let item of sale.itens) {
-      if (item.qtde < 0) {
+      if (!item.qtde || item.qtde < 0) {
         showMessageError('Quantidade do produto deve ser maior que zero')
         return false
       }
@@ -183,6 +183,7 @@ export default function SalePage() {
           <CardContent>
             <Box
               component="form"
+              noValidate
               onSubmit={handleSave}
               sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
             >
