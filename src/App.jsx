@@ -11,6 +11,7 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import SalesPage from "./pages/SalesPage";
 import SalePage from "./pages/SalePage";
+import ClientsPage from "./pages/ClientsPage";
 
 export default function App() {
   axios.defaults.baseURL = 'http://localhost:3000'
@@ -55,6 +56,10 @@ export default function App() {
         {
           path: '/vendas/:id',
           element: <SalePage />
+        },
+        {
+          path:'/clientes',
+          element: <ClientsPage/>
         },
         {
           path: '*',
