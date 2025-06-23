@@ -12,65 +12,77 @@ export default function SalePage() {
 
   const [customersList, setCustomersList] = useState([])
   const [productsList, setProductsList] = useState([])
-  const [saleItemsList, setSaleItemsList] = useState([])
 
   let { id } = useParams()
   const [sale, setSale] = useState({
     id: id != 'novo' ? id : uuidv4(),
     cliente_id: null,
-    data_hora: new Date()
+    data_hora: new Date(),
+    itens: []
   })
 
   useEffect(() => {
-    if (id != 'novo') {
-      axios.get(`/vendas/${id}`).then(result => setSale(result.data))
-      axios.get(`/venda_itens?venda_id=${id}`).then(result => setSaleItemsList(result.data))
+  const fetchData = async () => {
+    try {
+      const [customersResponse, productsResponse] = await Promise.all([
+        axios.get('/clientes'),
+        axios.get('/produtos')
+      ])
+
+      setCustomersList(customersResponse.data)
+      setProductsList(productsResponse.data)
+
+      if (id != 'novo') {
+        const saleResponse = await axios.get(`/vendas/${id}`)
+        setSale(saleResponse.data)
+      }
+    } catch (error) {
+      console.error('Erro ao carregar dados', error)
+      showMessageError('Erro ao carregar dados')
     }
+  }
 
-    axios.get('/clientes').then(result => setCustomersList(result.data))
-    axios.get('/produtos').then(result => setProductsList(result.data))
-  }, [id])
+  fetchData()
+}, [id])
 
-  const handleSave = (e) => {
+  const handleSave = async (e) => {
     e.preventDefault()
 
-    if (!validateForm()) {
+    if (!await validateForm()) {
       return
     }
-
 
     const now = new Date()
 
     if (id != 'novo') {
-      axios.patch(`/produtos/${id}`, { ...sale, updated_at: now })
+      axios.patch(`/vendas/${id}`, { ...sale, updated_at: now })
         .then(() => {
-          showMessageSuccess('Produto salvo com sucesso!');
-          navigate(`/produtos/${id}`)
+          showMessageSuccess('Venda salva com sucesso!');
+          navigate(`/vendas/${id}`)
         })
         .catch((err) => {
-          showMessageError('Ocorreu um erro ao salvar o produto')
+          showMessageError('Ocorreu um erro ao salvar a venda')
           console.log(err)
         })
     } else {
-      axios.post(`/produtos`, { ...sale, created_at: now, updated_at: now })
+      axios.post(`/vendas`, { ...sale, created_at: now, updated_at: now })
         .then(response => {
-          showMessageSuccess('Produto salvo com sucesso!');
-          navigate(`/produtos/${response.data.id}`)
+          showMessageSuccess('Venda salva com sucesso!');
+          navigate(`/vendas/${response.data.id}`)
         })
-        .catch(() => showMessageError('Ocorreu um erro ao salvar o produto'))
+        .catch(() => showMessageError('Ocorreu um erro ao salvar a venda'))
     }
+
+    // TODO: implementar lógica para alterar a quantidade disponível dos produtos que foram vendidos
   }
 
   const handleNew = () => {
     navigate('/produtos/novo')
     setSale({
       id: sale.id,
-      nome: '',
-      status: true,
-      descricao: '',
-      preco: 0,
-      categoria_id: null,
-      fornecedor_id: null
+      cliente_id: null,
+      data_hora: new Date(),
+      itens: []
     })
   }
 
@@ -78,33 +90,89 @@ export default function SalePage() {
     if (id == 'novo') {
       setSale({
         id: sale.id,
-        nome: '',
-        status: true,
-        descricao: '',
-        preco: 0,
-        categoria_id: null,
-        fornecedor_id: null
+        cliente_id: null,
+        data_hora: new Date(),
+        itens: []
       })
 
       showMessageSuccess('Produto excluído com sucesso!')
       return
     }
 
-    axios.delete(`/produtos/${id}`)
+    axios.delete(`/vendas/${id}`)
       .then(() => {
-        showMessageSuccess('Produto excluído com sucesso!')
-        navigate('/produtos/novo')
+        showMessageSuccess('Venda excluída com sucesso!')
+        navigate('/vendas/novo')
       })
       .catch(() => {
-        showMessageError('Ocorreu um erro ao excluir o produto')
+        showMessageError('Ocorreu um erro ao excluir a venda')
       })
   }
 
-  const validateForm = () => {
+  const validateForm = async () => {
+    if (!sale.cliente_id) {
+      showMessageError('É necessário selecionar um cliente!')
+      return false
+    }
+
+    if (!sale.data_hora) {
+      showMessageError('É necessário preencher a data da venda!')
+      return false
+    }
+
+    if (!sale.data_hora > new Date()) {
+      showMessageError('Data da venda não pode ser inferior a data atual!')
+    }
+
+    for (let item of sale.itens) {
+      if (!item.qtde || item.qtde < 0) {
+        showMessageError('Quantidade do produto deve ser maior que zero')
+        return false
+      }
+
+      let product
+      
+      try {
+        product = (await axios.get(`/produtos/${item.produto_id}`)).data
+      } catch { /* empty */ }
+
+      if (!product) {
+        showMessageError('Produto inválido selecionado!')
+        return false
+      }
+
+      if (product.qtde < item.qtde) {
+        showMessageError(`Quantidade indisponível para o produto ${product.nome}!`)
+        return false
+      }
+    }
+
     return true
   }
 
-  const handleSelectItem = () => {}
+  const handleSelectProduct = (saleItem, value) => {
+    const itens = sale.itens.map(item => {
+      if (item == saleItem) {
+        item.produto_id = value?.id
+      }
+
+      return item
+    })
+
+    setSale({ ...sale, itens })
+  }
+
+  const handleSetQtdeItem = (saleItem, qtde) => {
+    const itens = sale.itens.map(item => {
+      if (item == saleItem) {
+        item.qtde = parseInt(qtde)
+      }
+
+      return item
+    })
+
+    setSale({ ...sale, itens })
+  }
 
   return (
     <>
@@ -115,100 +183,50 @@ export default function SalePage() {
           <CardContent>
             <Box
               component="form"
+              noValidate
               onSubmit={handleSave}
               sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
             >
-              <TextField
-                label="Nome"
-                variant="outlined"
-                value={sale.nome}
-                required
-                onChange={(e) => setSale({ ...sale, nome: e.target.value })}
+              <Autocomplete
                 fullWidth
+                disablePortal
+                value={customersList.find(c => c.id == sale.cliente_id) ?? null}
+                options={customersList}
+                getOptionLabel={(option) => option.nome ?? ''}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
+                onChange={(e, value) => setSale({ ...sale, cliente_id: value?.id ?? null })}
+                renderInput={(params) => <TextField {...params} fullWidth label="Cliente"/>}
               />
-              <TextField
-                label="Descrição"
-                variant="outlined"
-                value={sale.descricao}
-                required
-                onChange={(e) => setSale({ ...sale, descricao: e.target.value })}
-                fullWidth
-              />
-              <TextField
-                label="Preço"
-                variant="outlined"
-                type="number"
-                value={sale.preco}
-                required
-                onChange={(e) => setSale({ ...sale, preco: parseFloat(e.target.value) })}
-                fullWidth
-              />
-              <FormControl fullWidth>
-                <InputLabel id="fornecedor-label">Fornecedor</InputLabel>
-                <Select
-                  labelId="fornecedor-label"
-                  value={sale.fornecedor_id}
-                  label="Fornecedor"
-                  onChange={(e) => setSale({ ...sale, fornecedor_id: e.target.value })}
-                >
-                  {customersList.map(fornecedor => (
-                    <MenuItem value={fornecedor.id} key={fornecedor.id}>
-                      {fornecedor.nome}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-              <FormControl fullWidth>
-                <InputLabel id="categoria-label">Categoria</InputLabel>
-                <Select
-                  labelId="categoria-label"
-                  value={sale.categoria_id}
-                  label="Categoria"
-                  onChange={(e) => setSale({ ...sale, categoria_id: e.target.value })}
-                >
-                  {productsList.map(categoria => (
-                    <MenuItem value={categoria.id} key={categoria.id}>
-                      {categoria.nome}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-
-              {saleItemsList.map(item => (
-                <Card variant="outlined" className="p-2 flex flex-row gap-2">
-                  <FormControl fullWidth>
-                    <InputLabel id="categoria-label">Produto</InputLabel>
-                    <Select
-                      labelId="categoria-label"
-                      value={item.produto_id}
-                      label="Categoria"
-                      onChange={handleSelectItem}
-                    >
-                      {productsList.map(categoria => (
-                        <MenuItem value={categoria.id} key={categoria.id}>
-                          {categoria.nome}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-
-                  <TextField
-                    label="Preço"
-                    variant="outlined"
-                    type="number"
-                    value={sale.preco}
-                    required
-                    onChange={(e) => setSale({ ...sale, preco: parseFloat(e.target.value) })}
+              
+              {sale.itens.map(item => (
+                <Card variant="outlined" className="p-2 flex flex-row gap-2" key={item.id}>
+                  <Autocomplete
                     fullWidth
+                    disablePortal
+                    value={productsList.find(p => p.id == item.produto_id) ?? null}
+                    options={productsList}
+                    getOptionLabel={(option) => option.nome ?? ''}
+                    isOptionEqualToValue={(option, value) => option.id === value.id}
+                    renderInput={(params) => <TextField {...params} fullWidth label="Produto"/>}
+                    onChange={(e, product) => handleSelectProduct(item, product)}
                   />
 
-                  <Button variant="outlined" color="error" sx={{ minWidth: '120px', width: '10vw', marginLeft: '5%' }} onClick={() => setSaleItemsList(saleItemsList.filter(e => e != item))}>
+                  <TextField
+                    label="Quantidade"
+                    variant="outlined"
+                    type="number"
+                    value={item.qtde}
+                    onChange={(e) => handleSetQtdeItem(item, e.target.value)}
+                    required
+                  />
+
+                  <Button variant="outlined" color="error" sx={{ minWidth: '120px', width: '10vw', marginLeft: '5%' }} onClick={() => setSale({...sale, itens: sale.itens.filter(currItem => currItem != item) })}>
                     <Remove />Remover
                   </Button>
                 </Card>
               ))}
 
-              <Button variant="outlined" color="primary" onClick={() => setSaleItemsList([ ...saleItemsList, {}])}>
+              <Button variant="outlined" color="primary" onClick={() => setSale({...sale, itens: [ ...sale.itens, { id: (sale.itens[(sale.itens.length || 1)- 1]?.id ?? 0) + 1 }] })}>
                 <AddIcon />Adicionar item
               </Button>
 
@@ -217,7 +235,7 @@ export default function SalePage() {
                   Salvar
                 </Button>
                 <Button variant="outlined" color="primary" type="button" onClick={handleNew} fullWidth>
-                  Novo Produto
+                  Nova venda
                 </Button>
               </Box>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}>
