@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { showMessageError, showMessageSuccess } from "../utils/notification-utils";
 import { v4 as uuidv4 } from 'uuid'
-import RequireLogin from "../components/RequireLogin";
+import RequireLogin from "../components/Dashboard/RequireLogin";
 
 export default function ProductPage() {
   const navigate = useNavigate()

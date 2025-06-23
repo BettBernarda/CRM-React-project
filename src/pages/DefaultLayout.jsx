@@ -1,7 +1,7 @@
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import { Outlet } from "react-router-dom";
-import ResponsiveAppBar from "../components/ResponsiveAppBar";
-import PathBreadcrumbs from "../components/PathBreadcrumbs";
+import ResponsiveAppBar from "../components/Dashboard/ResponsiveAppBar";
+import PathBreadcrumbs from "../components/Dashboard/PathBreadcrumbs";
 import { SnackbarProvider } from "notistack";
 import { UserContext } from "../context";
 

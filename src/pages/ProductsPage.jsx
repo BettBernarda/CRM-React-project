@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Add as AddIcon } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import RequireLogin from "../components/RequireLogin";
+import RequireLogin from "../components/Dashboard/RequireLogin";
 
 export default function ProductsPage() {
   const navigate = useNavigate()

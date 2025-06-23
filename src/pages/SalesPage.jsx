@@ -1,7 +1,7 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import RequireLogin from "../components/RequireLogin"
+import RequireLogin from "../components/Dashboard/RequireLogin"
 import { Box, Fab, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Tooltip, Typography } from "@mui/material"
 import { Add as AddIcon } from "@mui/icons-material"
 
