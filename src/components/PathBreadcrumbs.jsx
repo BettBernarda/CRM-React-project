@@ -37,7 +37,7 @@ export default function PathBreadcrumbs() {
     navigate(path)
   };
   
-  if (!userContext.id) {
+  if (!userContext?.id) {
     return
   }
 
