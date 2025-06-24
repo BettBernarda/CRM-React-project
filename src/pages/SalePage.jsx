@@ -242,6 +242,8 @@ export default function SalePage() {
                   </Button>
                 </Card>
               ))}
+              
+              <Typography>Total: {getFormattedTotal()}</Typography>
 
               <Button variant="outlined" color="primary" onClick={() => setSale({...sale, itens: [ ...sale.itens, { id: (sale.itens[(sale.itens.length || 1)- 1]?.id ?? 0) + 1 }] })}>
                 <AddIcon />Adicionar item
