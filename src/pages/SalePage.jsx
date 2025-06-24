@@ -21,6 +21,11 @@ export default function SalePage() {
     itens: []
   })
 
+  const moneyFormatter = new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+  })
+
   useEffect(() => {
   const fetchData = async () => {
     try {
