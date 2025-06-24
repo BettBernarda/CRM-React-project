@@ -109,7 +109,7 @@ export default function ProductPage() {
       return false
     }
 
-    if (product.name.length < 3) {
+    if (product.nome.length < 3) {
       showMessageError('Nome do produto deve ter pelo menos 3 caracteres!')
       return false
     }
