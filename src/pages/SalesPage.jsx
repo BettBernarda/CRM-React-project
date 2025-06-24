@@ -39,10 +39,10 @@ export default function SalesPage() {
       <>
         <RequireLogin />
         <Typography variant="h4" gutterBottom>
-          Produtos
+          Vendas
         </Typography>
         <TextField fullWidth
-            label="Pesquise por uma categoria"
+            label="Encontre uma venda pelo nome do cliente"
             type="search"
             variant="standard"
             value={searchText}
@@ -61,6 +61,7 @@ export default function SalesPage() {
               </TableHead>
               <TableBody>
                 {salesList
+                  .filter(sale => findCustomerNameById(sale.cliente_id).toUpperCase().includes(searchText.toUpperCase()))
                   .map(sale => (
                   <TableRow
                     key={sale.id}
