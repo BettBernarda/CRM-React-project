@@ -46,11 +46,11 @@ export default function Chartspage() {
       )}
 
       <div id="lineTwo" className="flex flex-col md:flex-row mt-4 gap-4">
-        <div id="table" className="flex-1">
+        <div id="table" className="flex-1 basis-128">
           <TabelaTopVendas categoriaSelecionada={categoriaSelecionada} />
         </div>
         <div id="GraphBox" className="flex-1 flex flex-col md:flex-row gap-4">
-          <div id="graph" className="flex-1">
+          <div id="graph" className="flex-1" >
             <GraficoCategoriasFiltravel onCategoriaSelecionada={setCategoriaSelecionada} />
           </div>
         </div>
