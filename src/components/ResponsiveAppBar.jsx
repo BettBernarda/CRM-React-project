@@ -26,7 +26,8 @@ const pages = [
   { 'name': 'Home', 'link': '/' },
   { 'name': 'Produtos', 'link': '/produtos' },
   { 'name': 'Categorias de Produtos', 'link': '/produtos/categorias' },
-  { 'name': 'Clientes', 'link':'/clientes'}
+  { 'name': 'Clientes', 'link':'/clientes'},
+  { 'name': 'Vendas', 'link': '/vendas'}
 ];
 
 export default function ResponsiveAppBar() {
