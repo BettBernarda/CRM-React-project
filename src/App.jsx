@@ -58,8 +58,8 @@ export default function App() {
           element: <SalePage />
         },
         {
-          path:'/clientes',
-          element: <ClientsPage/>
+          path: '/clientes',
+          element: <ClientsPage />
         },
         {
           path: '*',
