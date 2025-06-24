@@ -21,7 +21,7 @@ export default function MetaProgressao({ categoriaSelecionada }) {
   const [loadingDados, setLoadingDados] = useState(true);
 
   const inputRef = useRef(null);
-  const apiMeta = 'http://localhost:3000/Metas';
+  const apiMeta = 'http://localhost:3000/Meta';
 
   // Pega a meta anual
   useEffect(() => {
