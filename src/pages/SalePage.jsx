@@ -181,7 +181,8 @@ export default function SalePage() {
   const handleSetQtdeItem = (saleItem, qtde) => {
     const itens = sale.itens.map(item => {
       if (item == saleItem) {
-        item.qtde = parseInt(qtde)
+        const qtdeInt = parseInt(qtde)
+        item.qtde = isNaN(qtdeInt) ? 0 : qtdeInt
       }
 
       return item
