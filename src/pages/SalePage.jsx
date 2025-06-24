@@ -155,6 +155,17 @@ export default function SalePage() {
     return true
   }
 
+  const getFormattedTotal = () => {
+    const saleItemsWithQtde = sale.itens
+      .map(item => {
+        return { product: productsList.find(product => product.id == item.produto_id), qtde: item.qtde ?? 0 }
+      })
+      .filter(item => item.product)
+
+    const saleTotal = saleItemsWithQtde.reduce((total, item) => total + (item.product.preco * item.qtde), 0)
+    return moneyFormatter.format(saleTotal)
+  }
+
   const handleSelectProduct = (saleItem, value) => {
     const itens = sale.itens.map(item => {
       if (item == saleItem) {
