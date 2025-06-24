@@ -11,7 +11,6 @@ export default function SalesPage() {
   const [productsList, setProductsList] = useState([])
   const [customersList, setCustomersList] = useState([])
   const [salesList, setSalesList] = useState([])
-  const [saleItemsList, setSaleItemsList] = useState([])
   const [searchText, setSearchText] = useState('')
 
   const moneyFormatter = new Intl.NumberFormat('pt-BR', {
@@ -21,19 +20,18 @@ export default function SalesPage() {
 
   useEffect(() => {
     axios.get(`/vendas`).then(response => setSalesList(response.data))
-    axios.get(`/venda_itens`).then(response => setSaleItemsList(response.data))
     axios.get(`/produtos`).then(response => setProductsList(response.data))
     axios.get(`/clientes`).then(response => setCustomersList(response.data))
   }, [])
 
   const findCustomerNameById = id => customersList.find(customer => customer.id == id)?.nome ?? 'N/A'
 
-  const findFormattedSaleTotal = saleId => {
-    const saleItems = saleItemsList.filter(saleItem => saleItem.venda_id == saleId)
-    const saleItemProducts = saleItems.map(saleItem => productsList.find(product => product.id == saleItem.produto_id))
+  const findFormattedSaleTotal = sale => {
+    const saleItemsWithQtde = sale.itens.map(item => {
+      return { product: productsList.find(product => product.id == item.produto_id), qtde: item.qtde }
+    })
 
-    const saleTotal = saleItemProducts.reduce((total, product) => total + product.preco, 0)
-
+    const saleTotal = saleItemsWithQtde.reduce((total, item) => total + (item.product.preco * item.qtde), 0)
     return moneyFormatter.format(saleTotal)
   }
 
@@ -70,19 +68,19 @@ export default function SalesPage() {
                       '&:last-child td, &:last-child th': { border: 0 },
                       '&:hover': { cursor: 'pointer' }
                     }}
-                    onClick={() => navigate(`/produtos/${sale.id}`)}
+                    onClick={() => navigate(`/vendas/${sale.id}`)}
                   >
                     <TableCell component="th" scope="row">{sale.id}</TableCell>
                     <TableCell align="right">{findCustomerNameById(sale.cliente_id)}</TableCell>
                     <TableCell align="right">{new Date(sale.data_hora).toLocaleString('pt-BR')}</TableCell>
-                    <TableCell align="right">{findFormattedSaleTotal(sale.id)}</TableCell>
+                    <TableCell align="right">{findFormattedSaleTotal(sale)}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
           </TableContainer>
           <Box sx={{ '& > :not(style)': { m: 1 } }} className="flex justify-end">
-            <Tooltip title="Criar produto" onClick={() => navigate('/produtos/novo')}>
+            <Tooltip title="Criar produto" onClick={() => navigate('/vendas/novo')}>
               <Fab color="primary" aria-label="add">
                 <AddIcon />
               </Fab>
