@@ -2,7 +2,7 @@ import axios from "axios"
 import { useContext, useEffect, useState } from "react"
 import { showMessageError, showMessageSuccess } from "../utils/notification-utils"
 import { login, UserContext } from "../context"
-import { Box, Button, Card, CardContent, CardHeader, TextField } from "@mui/material"
+import { Box, Button, Card, CardContent, CardHeader, TextField, Typography } from "@mui/material"
 import { Link, useNavigate, useSearchParams } from "react-router-dom"
 import { v4 as uuidv4 } from "uuid"
 
@@ -72,7 +72,10 @@ export default function SignupPage() {
   }
 
   return (
-    <Box className="flex justify-center mt-10">
+    <Box className="flex justify-center items-center mt-10 flex-col">
+      <div className="m-10">
+        <Typography variant="h2">Bem vindo!</Typography>
+      </div>
       <Card sx={{ width: '600px', maxWidth: '75vw' }}>
         <CardHeader title="Crie sua Conta" />
         <CardContent>
