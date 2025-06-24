@@ -45,6 +45,7 @@ export default function ProductsPage() {
                   <TableCell align="right">Status</TableCell>
                   <TableCell align="right">Descrição</TableCell>
                   <TableCell align="right">Preço</TableCell>
+                  <TableCell align="right">Quantidade</TableCell>
                   <TableCell align="right">Categoria</TableCell>
                   <TableCell align="right">Fornecedor</TableCell>
                 </TableRow>
@@ -66,6 +67,7 @@ export default function ProductsPage() {
                     <TableCell align="right">{product.status ? 'Ativo' : 'Inativo'}</TableCell>
                     <TableCell align="right">{product.descricao}</TableCell>
                     <TableCell align="right">{product.preco}</TableCell>
+                    <TableCell align="right">{product.qtde}</TableCell>
                     <TableCell align="right">{findCategoriaNameById(product.categoria_id)}</TableCell>
                     <TableCell align="right">{findFornecedorNameById(product.fornecedor_id)}</TableCell>
                   </TableRow>
