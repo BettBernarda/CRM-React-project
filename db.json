@@ -7,7 +7,7 @@
   ],
   "fornecedores": [
     {
-      "id": "1",
+      "id": "c95d0183-880a-4130-9968-d0d05beea64d",
       "nome": "Fornecedor Alpha",
       "cnpj": "12345678000190",
       "telefone": "48999990001",
@@ -17,7 +17,7 @@
       "updated_at": "2024-06-01T10:00:00Z"
     },
     {
-      "id": "2",
+      "id": "34754a7a-303b-4a7a-8716-445601fe81b1",
       "nome": "Fornecedor Beta",
       "cnpj": "98765432000188",
       "telefone": "48999990002",
@@ -118,13 +118,13 @@
   ],
   "clientes": [
     {
-      "id": "1",
+      "id": "0b43eb09-4de6-4401-bae1-ae183ac1ac72",
       "nome": "Maria Oliveira",
       "email": "maria@gmail.com",
       "senha": "maria123"
     },
     {
-      "id": "2",
+      "id": "5a1e2fb8-71c4-4d7a-b61a-b5b276b7a6fe",
       "nome": "Carlos Souza",
       "email": "carlos@gmail.com",
       "senha": "carlos456"
@@ -132,23 +132,23 @@
   ],
   "vendas": [
     {
-      "id": "1",
+      "id": "dc4883a7-a8dc-47ac-a7ed-0bdc474b120d",
       "cliente_id": 1,
       "itens": [
         {
           "produto_id": "b2d42215-9a4d-4405-af4c-c12571ee9289",
-          "quantidade": 2
+          "qtde": 2
         }
       ],
       "data_hora": "2024-06-10T14:30:00Z"
     },
     {
-      "id": "2",
+      "id": "cd2e2291-04e4-4d6f-994a-6b1d75a386cc",
       "cliente_id": 2,
       "itens": [
         {
           "produto_id": "9f8834e0-62c9-40c0-b3a2-8418b87cd351",
-          "quantidade": 1
+          "qtde": 1
         }
       ],
       "data_hora": "2024-09-11T15:45:00Z"
