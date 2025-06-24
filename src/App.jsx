@@ -23,7 +23,7 @@ export default function App() {
       children: [
         {
           path: "/",
-          element: <ChartsPage/>
+          element: <ChartsPage />
         },
         {
           path: "/login",
@@ -46,23 +46,23 @@ export default function App() {
           element: <ProductCategoryPage />
         },
         {
-          path: '/produtos/:id',
+          path: "/produtos/:id",
           element: <ProductPage />
         },
         {
-          path: '/vendas',
+          path: "/vendas",
           element: <SalesPage />
         },
         {
-          path: '/vendas/:id',
+          path: "/vendas/:id",
           element: <SalePage />
         },
         {
-          path: '/clientes',
+          path: "/clientes",
           element: <ClientsPage />
         },
         {
-          path: '*',
+          path: "*",
           element: <PageNotFound />
         }
       ]
