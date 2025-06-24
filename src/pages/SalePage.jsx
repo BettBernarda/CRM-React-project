@@ -215,8 +215,8 @@ export default function SalePage() {
                 renderInput={(params) => <TextField {...params} fullWidth label="Cliente"/>}
               />
               
-              {sale.itens.map(item => (
-                <Card variant="outlined" className="p-2 flex flex-row gap-2" key={item.id}>
+              {sale.itens.map((item, i) => (
+                <Card variant="outlined" className="p-2 flex flex-row gap-2" key={i}>
                   <Autocomplete
                     fullWidth
                     disablePortal
@@ -245,7 +245,7 @@ export default function SalePage() {
               
               <Typography>Total: {getFormattedTotal()}</Typography>
 
-              <Button variant="outlined" color="primary" onClick={() => setSale({...sale, itens: [ ...sale.itens, { id: (sale.itens[(sale.itens.length || 1)- 1]?.id ?? 0) + 1 }] })}>
+              <Button variant="outlined" color="primary" onClick={() => setSale({...sale, itens: [ ...sale.itens, {}] })}>
                 <AddIcon />Adicionar item
               </Button>
 
