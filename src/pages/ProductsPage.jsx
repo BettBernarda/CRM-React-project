@@ -29,7 +29,7 @@ export default function ProductsPage() {
           Produtos
         </Typography>
         <TextField fullWidth
-            label="Pesquise por uma categoria"
+            label="Pesquise por um produto"
             type="search"
             variant="standard"
             value={searchText}
