@@ -20,6 +20,7 @@ import { useContext } from 'react';
 import { useColorScheme } from '@mui/material';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness2Icon from '@mui/icons-material/Brightness2';
+import axios from 'axios';
 
 const pages = [
   { 'name': 'Home', 'link': '/' },
@@ -32,6 +33,7 @@ export default function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [anchorElTheme, setAnchorElTheme] = React.useState(null);
+  const [loggedUserName, setLoggedUserName] = React.useState('')
   const { mode, setMode } = useColorScheme()
 
   const userContext = useContext(UserContext)
@@ -64,6 +66,12 @@ export default function ResponsiveAppBar() {
   const handleLogout = () => {
     logout(userContext, navigate)
   }
+
+  React.useEffect(() => {
+    if (userContext.id) {
+      axios.get(`/usuarios/${userContext.id}`).then(result => setLoggedUserName(result.data?.nome ?? ''))
+    }
+  }, [])
 
   if (!userContext.id) {
     return
@@ -143,7 +151,7 @@ export default function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt={loggedUserName} src="/static/images/avatar/1.jpg" />
               </IconButton>
             </Tooltip>
             <Menu
@@ -162,12 +170,7 @@ export default function ResponsiveAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              <MenuItem onClick={handleCloseUserMenu}>
-                <Typography sx={{ textAlign: 'center' }}>Profile</Typography>
-              </MenuItem>
-              <MenuItem onClick={handleCloseUserMenu}>
-                <Typography sx={{ textAlign: 'center' }}>Account</Typography>
-              </MenuItem>
+              <Typography sx={{ textAlign: 'center' }}>{loggedUserName}</Typography>
               <MenuItem onClick={handleLogout}>
                 <Typography sx={{ textAlign: 'center' }}>Logout</Typography>
               </MenuItem>
