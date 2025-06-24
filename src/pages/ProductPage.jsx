@@ -154,6 +154,7 @@ export default function ProductPage() {
           <CardContent>
             <Box
               component="form"
+              noValidate
               onSubmit={handleSave}
               sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
             >
