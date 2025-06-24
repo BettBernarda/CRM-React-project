@@ -72,6 +72,7 @@ export default function ProductPage() {
       status: true,
       descricao: '',
       preco: 0,
+      qtde: 0,
       categoria_id: null,
       fornecedor_id: null
     })
@@ -84,6 +85,7 @@ export default function ProductPage() {
         nome: '',
         status: true,
         descricao: '',
+        qtde: 0,
         preco: 0,
         categoria_id: null,
         fornecedor_id: null
@@ -121,6 +123,21 @@ export default function ProductPage() {
 
     if (!product.preco) {
       showMessageError('È necessário preencher o preço do produto!')
+      return false
+    }
+
+    if (product.preco < 0) {
+      showMessageError('Preço do produto não pode ser negativo!')
+      return false
+    }
+
+    if (!product.qtde) {
+      showMessageError('É necessário preencher a quantidade do produto!')
+      return false
+    }
+
+    if (product.qtde < 0) {
+      showMessageError('Quantidade do produto não pode ser negativa!')
       return false
     }
 
@@ -183,6 +200,15 @@ export default function ProductPage() {
                 onChange={(e) => setProduct({ ...product, preco: parseFloat(e.target.value) })}
                 fullWidth
               />
+              <TextField
+                label="Quantidade"
+                variant="outlined"
+                type="number"
+                value={product.qtde}
+                onChange={(e) => setProduct({ ...product, qtde: parseFloat(e.target.value)})}
+                required
+              />
+              {/* TODO: alterar esse Select para Autocomplete se der tempo */}
               <FormControl fullWidth>
                 <InputLabel id="fornecedor-label">Fornecedor</InputLabel>
                 <Select
