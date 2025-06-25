@@ -25,6 +25,8 @@ export default function SignupPage() {
   const handleSignup = async (e) => {
     e.preventDefault()
 
+    setUser({ ...user, nome: user.nome?.trim(), email: user.email?.trim() })
+
     if (!await validateSignup()) {
       return
     }
@@ -44,8 +46,18 @@ export default function SignupPage() {
       return false
     }
 
-    if (!user.email) {
+    if (!user.email?.trim()) {
       showMessageError('É necessário preencher o email!')
+      return false
+    }
+
+    if (!user.senha) {
+      showMessageError('É necessário preencher a senha!')
+      return false
+    }
+
+    if (!confirmedPassword) {
+      showMessageError('Por favor, confirme sua senha')
       return false
     }
 
