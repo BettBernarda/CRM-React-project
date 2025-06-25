@@ -135,16 +135,16 @@ export default function MetaProgressao({ categoriaSelecionada }) {
   }, [vendas, produtoInfo, currentYear, mesAtual, categoriaSelecionada]);
 
   const metaNumerica = Number(value) / 100 || 0;
-  const percentAno = metaNumerica > 0 ? (totalVendidoAno / metaNumerica) * 100 :0 ;
+  const percentAno = metaNumerica > 0 ? (totalVendidoAno / metaNumerica) * 100 : 0;
   const percentAnoLimite = percentAno > 100 ? 100 : percentAno;
   const percentMes = metaNumerica > 0 ? (totalVendidoMes / metaNumerica) * 100 : 0;
 
   if (loadingMeta || loadingDados) return <p className="text-white">Carregando...</p>;
 
   return (
-    <Box sx={{ width: '100%', bgcolor: '#2a2a2a', borderRadius: 2, p: 3 }}>
+    <Box sx={{ marginTop: 5, width: '100%', bgcolor: '#2a2a2a', borderRadius: 2, p: 3 }}>
       {/* Input editável da meta */}
-      <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
+      <Box sx={{   whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', mb: 3 }}>
         <Typography variant="h6" sx={{ color: 'white', mr: 2 }}>
           Meta {currentYear}:
         </Typography>
@@ -160,7 +160,7 @@ export default function MetaProgressao({ categoriaSelecionada }) {
             backgroundColor: 'transparent',
             border: 'none',
             outline: 'none',
-            width: 220,
+            width: 200,
             fontSize: 22,
             fontWeight: 'bold',
             cursor: isEditMode ? 'text' : 'pointer',
@@ -177,6 +177,10 @@ export default function MetaProgressao({ categoriaSelecionada }) {
           </Button>
         )}
       </Box>
+      {/* Progresso do mês atual - só texto */}
+      <Typography variant="subtitle2" sx={{ color: 'white' }}>
+        Venda do mês atual: R$ {totalVendidoMes.toFixed(2)}
+      </Typography>
 
       <Typography variant="body2" sx={{ color: 'white', mb: 2 }}>
         Total vendido no ano: R$ {totalVendidoAno.toFixed(2)} ({percentAno.toFixed(1)}%)
@@ -184,11 +188,6 @@ export default function MetaProgressao({ categoriaSelecionada }) {
       <Stack spacing={2} sx={{ mb: 3 }}>
         <LinearProgress variant="determinate" value={percentAnoLimite} />
       </Stack>
-
-      {/* Progresso do mês atual - só texto */}
-      <Typography variant="subtitle2" sx={{ color: 'white' }}>
-        Venda do mês atual: R$ {totalVendidoMes.toFixed(2)}
-      </Typography>
     </Box>
   );
 }
