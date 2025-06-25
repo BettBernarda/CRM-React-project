@@ -12,6 +12,7 @@ import SignupPage from "./pages/SignupPage";
 import SalesPage from "./pages/SalesPage";
 import SalePage from "./pages/SalePage";
 import ClientsPage from "./pages/ClientsPage";
+import ClientPage from "./pages/ClientPage";
 
 export default function App() {
   axios.defaults.baseURL = 'http://localhost:3000'
@@ -59,7 +60,11 @@ export default function App() {
         },
         {
           path: "/clientes",
-          element: <ClientsPage />
+          element: <ClientsPage/>
+        },
+         {
+          path: "/clientes/:id",
+          element: <ClientPage />
         },
         {
           path: "*",
