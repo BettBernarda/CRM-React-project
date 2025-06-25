@@ -79,10 +79,10 @@ export default function ProductCategoryPage() {
       return
     }
 
-    axios.delete(`/produtos/${id}`)
+    axios.delete(`/categorias_produto/${id}`)
       .then(() => {
         showMessageSuccess('Categoria excluída com sucesso!')
-        navigate('/produtos/novo')
+        navigate('/produtos/categorias/novo')
       })
       .catch(() => {
         showMessageError('Ocorreu um erro ao excluir a categoria')
