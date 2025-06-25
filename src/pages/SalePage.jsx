@@ -23,28 +23,32 @@ export default function SalePage() {
   })
 
   useEffect(() => {
-  const fetchData = async () => {
-    try {
-      const [customersResponse, productsResponse] = await Promise.all([
-        axios.get('/clientes'),
-        axios.get('/produtos')
-      ])
+    const fetchData = async () => {
+      try {
+        const [customersResponse, productsResponse] = await Promise.all([
+          axios.get('/clientes'),
+          axios.get('/produtos')
+        ])
 
-      setCustomersList(customersResponse.data)
-      setProductsList(productsResponse.data)
+        setCustomersList(customersResponse.data)
+        setProductsList(productsResponse.data)
 
-      if (id != 'novo') {
-        const saleResponse = await axios.get(`/vendas/${id}`)
-        setSale(saleResponse.data)
+        if (id != 'novo') {
+          const saleResponse = await axios.get(`/vendas/${id}`)
+          setSale(saleResponse.data)
+        }
+      } catch (error) {
+        console.error('Erro ao carregar dados', error)
+        showMessageError('Erro ao carregar dados')
       }
-    } catch (error) {
-      console.error('Erro ao carregar dados', error)
-      showMessageError('Erro ao carregar dados')
     }
-  }
 
-  fetchData()
-}, [id])
+    fetchData()
+  }, [id])
+
+  const findProductById = async (id) => {
+    return (await axios.get(`/produtos/${id}`)).data
+  }
 
   const handleSave = async (e) => {
     e.preventDefault()
@@ -55,9 +59,60 @@ export default function SalePage() {
 
     const now = new Date()
 
+    
     if (id != 'novo') {
+      let saleOld
+
+      try {
+         saleOld = (await axios.get(`/vendas/${id}`)).data
+      } catch {
+        showMessageError('Não foi possível recuperar os dados')
+        return
+      }
+
+      saleOld.itens.forEach(console.log)
+
+      const newItemsProductIds = sale.itens.map(item => item.produto_id)
+      const oldItemsProductIds = saleOld.itens.map(item => item.produto_id)
+
+      const qtdeToSubtractByProductId = new Map()
+
+      // Set para garantir unicidade
+      const allItemProductsOldAndNew = new Set()
+
+      sale.itens.forEach((item) => allItemProductsOldAndNew.add(item.produto_id))
+      saleOld.itens.forEach((item) => allItemProductsOldAndNew.add(item.produto_id))
+
+      allItemProductsOldAndNew.forEach(async produtoId => {
+        if (newItemsProductIds.includes(produtoId) || oldItemsProductIds.includes(produtoId)) {
+          const product = await findProductById(produtoId)
+          const oldItem = saleOld.itens.find(item => item.produto_id == produtoId)
+          const newItem = sale.itens.find(item => item.produto_id == produtoId)
+
+          if (newItem && oldItem) {
+            const qtdeDiff = newItem.qtde - oldItem.qtde
+            if (qtdeDiff == 0) {
+              return 
+            }
+
+            qtdeToSubtractByProductId.set(produtoId, product.qtde - qtdeDiff)
+            
+          } else if (newItem) {
+            qtdeToSubtractByProductId.set(produtoId, product.qtde - newItem.qtde)
+
+          } else if (oldItem) {
+            qtdeToSubtractByProductId.set(produtoId, product.qtde + oldItem.qtde) // "devolve" a quantidade dos produtos
+          }
+        }
+      })
+
       axios.patch(`/vendas/${id}`, { ...sale, updated_at: now })
         .then(() => {
+          qtdeToSubtractByProductId.forEach((qtde, productId) => {
+            alert(productId + ' - ' + qtde)
+            axios.patch(`/produtos/${productId}`, { qtde })
+          })
+
           showMessageSuccess('Venda salva com sucesso!');
           navigate(`/vendas/${id}`)
         })
@@ -68,13 +123,20 @@ export default function SalePage() {
     } else {
       axios.post(`/vendas`, { ...sale, created_at: now, updated_at: now })
         .then(response => {
+          sale.itens.forEach(updateProductQtde)
+
           showMessageSuccess('Venda salva com sucesso!');
           navigate(`/vendas/${response.data.id}`)
         })
         .catch(() => showMessageError('Ocorreu um erro ao salvar a venda'))
     }
+  }
 
-    // TODO: implementar lógica para alterar a quantidade disponível dos produtos que foram vendidos
+  const updateProductQtde = async item => {
+    const product = (await axios.get(`/produtos/${item.produto_id}`)).data
+
+    product.qtde -= item.qtde
+    axios.patch(`/produtos/${item.produto_id}`, product)
   }
 
   const handleNew = () => {
@@ -151,6 +213,12 @@ export default function SalePage() {
     return true
   }
 
+  const filterNotSelectedProducts = () => productsList.filter(product => !sale.itens.map(item => item.produto_id).includes(product.id))
+
+  useEffect(() => {
+    console.log(sale)
+  }, [sale])
+
   const getFormattedTotal = () => {
     const saleItemsWithQtde = sale.itens
       .map(item => {
@@ -217,7 +285,7 @@ export default function SalePage() {
                     fullWidth
                     disablePortal
                     value={productsList.find(p => p.id == item.produto_id) ?? null}
-                    options={productsList}
+                    options={filterNotSelectedProducts()}
                     getOptionLabel={(option) => option.nome ?? ''}
                     isOptionEqualToValue={(option, value) => option.id === value.id}
                     renderInput={(params) => <TextField {...params} fullWidth label="Produto"/>}
