@@ -1,4 +1,5 @@
 import axios from "axios"
+import React from "react"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import RequireLogin from "../components/RequireLogin"
@@ -82,102 +83,110 @@ export default function SalesPage() {
               </TableRow>
             </TableHead>
             <TableBody>
-  {salesList
-    .filter(sale => findCustomerNameById(sale.cliente_id).toUpperCase().includes(searchText.toUpperCase()))
-    .map((sale) => (
-      <>
-        <TableRow key={sale.id}>
-          <TableCell>
-            <IconButton size="small" onClick={() => toggleRow(sale.id)}>
-              {openRows[sale.id] ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
-            </IconButton>
-          </TableCell>
-          <TableCell>{sale.id}</TableCell>
-          <TableCell align="right">{findCustomerNameById(sale.cliente_id)}</TableCell>
-          <TableCell align="right">{new Date(sale.data_hora).toLocaleString('pt-BR')}</TableCell>
-          <TableCell align="right">{findFormattedSaleTotal(sale)}</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell colSpan={5} sx={{ paddingBottom: 0, paddingTop: 0 }}>
-            <Collapse in={openRows[sale.id]} timeout="auto" unmountOnExit>
-              <Box sx={{ margin: 1 }}>
-                <Typography variant="h6" gutterBottom>
-                  Itens da Venda
-                </Typography>
-                <Table size="small">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Produto</TableCell>
-                      <TableCell align="right">Preço</TableCell>
-                      <TableCell align="right">Quantidade</TableCell>
-                      <TableCell align="right">Subtotal</TableCell>
-                      <TableCell align="right">Ações</TableCell>
+              {salesList
+                .filter(sale => findCustomerNameById(sale.cliente_id).toUpperCase().includes(searchText.toUpperCase()))
+                .map((sale) => (
+                  <React.Fragment key={sale.id}>
+                    <TableRow
+                      sx={{ '&:hover': { cursor: 'pointer' } }}
+                      onClick={() => navigate(`/vendas/${sale.id}`)}
+                    >
+                      <TableCell
+                        onClick={(e) => {
+                          e.stopPropagation() // Impede a navegação ao clicar no botão
+                          toggleRow(sale.id)
+                        }}
+                      >
+                        <IconButton size="small">
+                          {openRows[sale.id] ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
+                        </IconButton>
+                      </TableCell>
+                      <TableCell>{sale.id}</TableCell>
+                      <TableCell align="right">{findCustomerNameById(sale.cliente_id)}</TableCell>
+                      <TableCell align="right">{new Date(sale.data_hora).toLocaleString('pt-BR')}</TableCell>
+                      <TableCell align="right">{findFormattedSaleTotal(sale)}</TableCell>
                     </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {sale.itens.map((item, index) => {
-                      const product = productsList.find(p => p.id === item.produto_id)
-                      if (!product) return null
+                    <TableRow>
+                      <TableCell colSpan={5} sx={{ paddingBottom: 0, paddingTop: 0 }}>
+                        <Collapse in={openRows[sale.id]} timeout="auto" unmountOnExit>
+                          <Box sx={{ margin: 1 }}>
+                            <Typography variant="h6" gutterBottom>
+                              Itens da Venda
+                            </Typography>
+                            <Table size="small">
+                              <TableHead>
+                                <TableRow>
+                                  <TableCell>Produto</TableCell>
+                                  <TableCell align="right">Preço</TableCell>
+                                  <TableCell align="right">Quantidade</TableCell>
+                                  <TableCell align="right">Subtotal</TableCell>
+                                  <TableCell align="right">Ações</TableCell>
+                                </TableRow>
+                              </TableHead>
+                              <TableBody>
+                                {sale.itens.map((item, index) => {
+                                  const product = productsList.find(p => p.id === item.produto_id)
+                                  if (!product) return null
 
-                      const subtotal = product.preco * item.qtde
+                                  const subtotal = product.preco * item.qtde
 
-                      const handleUpdate = async (newItens) => {
-                        try {
-                          await axios.put(`/vendas/${sale.id}`, {
-                            ...sale,
-                            itens: newItens
-                          })
-                          setSalesList(prev => prev.map(s => s.id === sale.id ? { ...sale, itens: newItens } : s))
-                        } catch (error) {
-                          alert("Erro ao atualizar venda.")
-                          console.error(error)
-                        }
-                      }
+                                  const handleUpdate = async (newItens) => {
+                                    try {
+                                      await axios.put(`/vendas/${sale.id}`, {
+                                        ...sale,
+                                        itens: newItens
+                                      })
+                                      setSalesList(prev => prev.map(s => s.id === sale.id ? { ...sale, itens: newItens } : s))
+                                    } catch (error) {
+                                      alert("Erro ao atualizar venda.")
+                                      console.error(error)
+                                    }
+                                  }
 
-                      return (
-                        <TableRow key={index}>
-                          <TableCell>{product.nome}</TableCell>
-                          <TableCell align="right">{formatCurrency(product.preco)}</TableCell>
-                          <TableCell align="right">
-                            <TextField
-                              type="number"
-                              size="small"
-                              value={item.qtde}
-                              onChange={(e) => {
-                                const qtde = Number(e.target.value)
-                                if (qtde >= 1) {
-                                  const newItens = [...sale.itens]
-                                  newItens[index].qtde = qtde
-                                  handleUpdate(newItens)
-                                }
-                              }}
-                              inputProps={{ min: 1 }}
-                              sx={{ width: '60px' }}
-                            />
-                          </TableCell>
-                          <TableCell align="right">{formatCurrency(subtotal)}</TableCell>
-                          <TableCell align="right">
-                            <button
-                              onClick={() => {
-                                const newItens = sale.itens.filter((_, i) => i !== index)
-                                handleUpdate(newItens)
-                              }}
-                            >
-                              Remover
-                            </button>
-                          </TableCell>
-                        </TableRow>
-                      )
-                    })}
-                  </TableBody>
-                </Table>
-              </Box>
-            </Collapse>
-          </TableCell>
-        </TableRow>
-      </>
-    ))}
-</TableBody>
+                                  return (
+                                    <TableRow key={index}>
+                                      <TableCell>{product.nome}</TableCell>
+                                      <TableCell align="right">{formatCurrency(product.preco)}</TableCell>
+                                      <TableCell align="right">
+                                        <TextField
+                                          type="number"
+                                          size="small"
+                                          value={item.qtde}
+                                          onChange={(e) => {
+                                            const qtde = Number(e.target.value)
+                                            if (qtde >= 1) {
+                                              const newItens = [...sale.itens]
+                                              newItens[index].qtde = qtde
+                                              handleUpdate(newItens)
+                                            }
+                                          }}
+                                          inputProps={{ min: 1 }}
+                                          sx={{ width: '60px' }}
+                                        />
+                                      </TableCell>
+                                      <TableCell align="right">{formatCurrency(subtotal)}</TableCell>
+                                      <TableCell align="right">
+                                        <button
+                                          onClick={() => {
+                                            const newItens = sale.itens.filter((_, i) => i !== index)
+                                            handleUpdate(newItens)
+                                          }}
+                                        >
+                                          Remover
+                                        </button>
+                                      </TableCell>
+                                    </TableRow>
+                                  )
+                                })}
+                              </TableBody>
+                            </Table>
+                          </Box>
+                        </Collapse>
+                      </TableCell>
+                    </TableRow>
+                  </React.Fragment>
+                ))}
+            </TableBody>
 
           </Table>
         </TableContainer>
