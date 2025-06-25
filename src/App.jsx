@@ -13,6 +13,8 @@ import SalesPage from "./pages/SalesPage";
 import SalePage from "./pages/SalePage";
 import ClientsPage from "./pages/ClientsPage";
 import ClientPage from "./pages/ClientPage";
+import SuppliersPage from "./pages/SuppliersPage";
+import SupplierCreatePage from "./pages/SupplierPage";
 
 export default function App() {
   axios.defaults.baseURL = 'http://localhost:3000'
@@ -69,6 +71,14 @@ export default function App() {
         {
           path: "*",
           element: <PageNotFound />
+        },
+        {
+          path: "fornecedores",
+          element: <SuppliersPage />
+        },
+        {
+          path: "fornecedores/:id",
+          element: <SupplierCreatePage />
         }
       ]
     },
