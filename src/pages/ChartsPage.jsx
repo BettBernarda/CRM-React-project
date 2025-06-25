@@ -1,6 +1,6 @@
 import { Grid, Box, Stack, LinearProgress } from '@mui/material';
 import ChartLine from '../components/Dashboard/ChartsLine';
-import RequireLogin from '../components/Dashboard/RequireLogin';
+import RequireLogin from '../components/RequireLogin';
 import EditableInput from '../components/Dashboard/GoalProgression';
 import axios from 'axios';
 import { useState, useEffect } from 'react';

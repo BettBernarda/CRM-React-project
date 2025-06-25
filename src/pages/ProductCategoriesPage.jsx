@@ -3,7 +3,7 @@ import { Box, Fab, Paper, Table, TableBody, TableCell, TableContainer, TableHead
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import RequireLogin from "../components/Dashboard/RequireLogin"
+import RequireLogin from "../components/RequireLogin"
 
 export default function ProductCategoriesPage() {
   const [categoriasList, setCategoriasList] = useState([])
