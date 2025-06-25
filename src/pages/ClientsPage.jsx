@@ -39,7 +39,6 @@ export default function ClientsPage() {
                 <TableCell>ID</TableCell>
                 <TableCell align="right">Nome</TableCell>
                 <TableCell align="right">E-mail</TableCell>
-                <TableCell align="right">Senha</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -57,7 +56,6 @@ export default function ClientsPage() {
                     <TableCell component="th" scope="row">{cliente.id}</TableCell>
                     <TableCell align="right">{cliente.nome}</TableCell>
                     <TableCell align="right">{cliente.email}</TableCell>
-                    <TableCell align="right">{cliente.senha}</TableCell>
                   </TableRow>
               ))}
             </TableBody>
