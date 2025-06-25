@@ -14,7 +14,7 @@ export default function Chartspage() {
   const [metaValue, setMetaValue] = useState(0);
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/Metas?id=${currentYear}`)
+    axios.get(`/metas?id=${currentYear}`)
       .then((res) => {
         if (res.data.length > 0) {
           setMetaValue(res.data[0].value);

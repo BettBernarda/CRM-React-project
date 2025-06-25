@@ -21,7 +21,7 @@ export default function MetaProgressao({ categoriaSelecionada }) {
   const [loadingDados, setLoadingDados] = useState(true);
 
   const inputRef = useRef(null);
-  const apiMeta = 'http://localhost:3000/Meta';
+  const apiMeta = '/metas';
 
   // Pega a meta anual
   useEffect(() => {
@@ -43,8 +43,8 @@ export default function MetaProgressao({ categoriaSelecionada }) {
   useEffect(() => {
     setLoadingDados(true);
     Promise.all([
-      axios.get('http://localhost:3000/vendas'),
-      axios.get('http://localhost:3000/produtos'),
+      axios.get('/vendas'),
+      axios.get('/produtos'),
     ]).then(([resVendas, resProdutos]) => {
       setVendas(resVendas.data);
       setProdutos(resProdutos.data);
