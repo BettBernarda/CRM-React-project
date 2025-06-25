@@ -21,7 +21,9 @@ export default function LoginPage() {
   const handleSignin = async (e) => {
     e.preventDefault()
 
-    if (!user.email) {
+    setUser({ ...user, email: user.email?.trim() })
+
+    if (!user.email?.trim()) {
       showMessageError('Informe seu Email!')
       return
     }
