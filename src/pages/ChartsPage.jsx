@@ -1,4 +1,4 @@
-import { Grid, Box, Stack, LinearProgress } from '@mui/material';
+import { Grid, Box, Stack, LinearProgress , Typography } from '@mui/material';
 import ChartLine from '../components/Dashboard/ChartsLine';
 import RequireLogin from '../components/RequireLogin';
 import EditableInput from '../components/Dashboard/GoalProgression';
@@ -26,32 +26,38 @@ export default function Chartspage() {
   }, [currentYear]);
 
   return (
-    <div id="Container" className="p-4">
-      <RequireLogin />
-
-      <div id="lineOne" className="flex flex-row gap-4 mb-10">
-        <ChartLine categoriaSelecionada={categoriaSelecionada} />
-        <div id="Side-numbers" className="basis-1/3 flex flex-col gap-4">
-          <MetaProgressao />
-        </div>
+    <div>
+      <div className='flex flex-row'>
+        <Typography variant="h4" gutterBottom>
+          Dashboard
+        </Typography>
+        {categoriaSelecionada && (
+          <button
+            onClick={() => setCategoriaSelecionada(null)}
+            className="bg-red-500 text-white px-4 py-2 rounded mb-2 ml-3 "
+          >
+            Limpar filtro
+          </button>
+        )}
       </div>
-
-      {categoriaSelecionada && (
-        <button
-          onClick={() => setCategoriaSelecionada(null)}
-          className="bg-red-500 text-white px-4 py-2 rounded mt-4"
-        >
-          Limpar filtro
-        </button>
-      )}
-
-      <div id="lineTwo" className="flex flex-col md:flex-row mt-4 gap-4">
-        <div id="table" className="flex-1 basis-128">
-          <TabelaTopVendas categoriaSelecionada={categoriaSelecionada} />
+      <div id="Container" className="p-4">
+        <RequireLogin />
+        <div id="lineOne" className="flex flex-row gap-4 mb-10">
+          <ChartLine categoriaSelecionada={categoriaSelecionada} />
+          <div id="Side-numbers" className="basis-1/3 flex flex-col gap-4">
+            <MetaProgressao />
+          </div>
         </div>
-        <div id="GraphBox" className="flex-1 flex flex-col md:flex-row gap-4">
-          <div id="graph" className="flex-1" >
-            <GraficoCategoriasFiltravel onCategoriaSelecionada={setCategoriaSelecionada} />
+        <div className="pl-10">
+          <div id="lineTwo" className="flex flex-col md:flex-row mt-4 gap-4">
+            <div id="table" className="flex-1 basis-128">
+              <TabelaTopVendas categoriaSelecionada={categoriaSelecionada} />
+            </div>
+            <div id="GraphBox" className="flex-1 flex flex-col md:flex-row gap-4">
+              <div id="graph" className="flex-1" >
+                <GraficoCategoriasFiltravel onCategoriaSelecionada={setCategoriaSelecionada} />
+              </div>
+            </div>
           </div>
         </div>
       </div>
