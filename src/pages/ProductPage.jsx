@@ -67,7 +67,7 @@ export default function ProductPage() {
   const handleNew = () => {
     navigate('/produtos/novo')
     setProduct({
-      id: product.id,
+      id: uuidv4(),
       nome: '',
       status: true,
       descricao: '',
@@ -81,7 +81,7 @@ export default function ProductPage() {
   const handleDelete = () => {
     if (id == 'novo') {
       setProduct({
-        id: product.id,
+        id: uuidv4(),
         nome: '',
         status: true,
         descricao: '',

@@ -137,7 +137,6 @@ export default function MetaProgressao({ categoriaSelecionada }) {
   const metaNumerica = Number(value) / 100 || 0;
   const percentAno = metaNumerica > 0 ? (totalVendidoAno / metaNumerica) * 100 : 0;
   const percentAnoLimite = percentAno > 100 ? 100 : percentAno;
-  const percentMes = metaNumerica > 0 ? (totalVendidoMes / metaNumerica) * 100 : 0;
 
   if (loadingMeta || loadingDados) return <p className="text-white">Carregando...</p>;
 
