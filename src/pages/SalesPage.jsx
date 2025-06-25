@@ -22,14 +22,20 @@ export default function SalesPage() {
 
   const findCustomerNameById = id => customersList.find(customer => customer.id == id)?.nome ?? 'N/A'
 
-  const findFormattedSaleTotal = sale => {
-    const saleItemsWithQtde = sale.itens.map(item => {
-      return { product: productsList.find(product => product.id == item.produto_id), qtde: item.qtde }
-    })
+ const findFormattedSaleTotal = (sale) => {
+  const saleItemsWithQtde = sale.itens.map(item => {
+    const product = productsList.find(product => product.id == item.produto_id)
+    return { product, qtde: item.qtde }
+  })
 
-    const saleTotal = saleItemsWithQtde.reduce((total, item) => total + (item.product.preco * item.qtde), 0.00)
-    return formatCurrency(saleTotal)
-  }
+  const saleTotal = saleItemsWithQtde.reduce((total, item) => {
+    if (!item.product) return total // ignora itens com produto não encontrado
+    return total + item.product.preco * item.qtde
+  }, 0.00)
+
+  return formatCurrency(saleTotal)
+}
+
 
   return (
       <>
