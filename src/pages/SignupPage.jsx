@@ -41,7 +41,7 @@ export default function SignupPage() {
   }
 
   const validateSignup = async () => {
-    if (!user.nome) {
+    if (!user.nome?.trim()) {
       showMessageError('É necessário preencher o nome!')
       return false
     }
