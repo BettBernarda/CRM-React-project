@@ -8,6 +8,9 @@ import RequireLogin from "../components/RequireLogin";
 import { Add as AddIcon, Remove } from "@mui/icons-material";
 import { formatCurrency } from "../utils/format-utils";
 
+// TODO: falta finalizar a implementação de interação estoque-venda
+// - verificação se quantidade vendida extrapola a quantidade disponível do produto
+// - "ressarcimento" dos itens após a exclusão da venda
 export default function SalePage() {
   const navigate = useNavigate()
 
