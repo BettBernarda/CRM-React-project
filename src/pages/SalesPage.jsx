@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 import RequireLogin from "../components/RequireLogin"
 import { Box, Fab, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Tooltip, Typography } from "@mui/material"
 import { Add as AddIcon } from "@mui/icons-material"
+import { formatCurrency } from "../utils/format-utils"
 
 export default function SalesPage() {
   const navigate = useNavigate()
@@ -12,11 +13,6 @@ export default function SalesPage() {
   const [customersList, setCustomersList] = useState([])
   const [salesList, setSalesList] = useState([])
   const [searchText, setSearchText] = useState('')
-
-  const moneyFormatter = new Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL'
-  })
 
   useEffect(() => {
     axios.get(`/vendas`).then(response => setSalesList(response.data))
@@ -31,8 +27,8 @@ export default function SalesPage() {
       return { product: productsList.find(product => product.id == item.produto_id), qtde: item.qtde }
     })
 
-    const saleTotal = saleItemsWithQtde.reduce((total, item) => total + (item.product.preco * item.qtde), 0)
-    return moneyFormatter.format(saleTotal)
+    const saleTotal = saleItemsWithQtde.reduce((total, item) => total + (item.product.preco * item.qtde), 0.00)
+    return formatCurrency(saleTotal)
   }
 
   return (

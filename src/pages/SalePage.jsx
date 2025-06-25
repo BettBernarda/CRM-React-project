@@ -6,6 +6,7 @@ import { showMessageError, showMessageSuccess } from "../utils/notification-util
 import { v4 as uuidv4 } from 'uuid'
 import RequireLogin from "../components/RequireLogin";
 import { Add as AddIcon, Remove } from "@mui/icons-material";
+import { formatCurrency } from "../utils/format-utils";
 
 export default function SalePage() {
   const navigate = useNavigate()
@@ -19,11 +20,6 @@ export default function SalePage() {
     cliente_id: null,
     data_hora: new Date(),
     itens: []
-  })
-
-  const moneyFormatter = new Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL'
   })
 
   useEffect(() => {
@@ -163,7 +159,7 @@ export default function SalePage() {
       .filter(item => item.product)
 
     const saleTotal = saleItemsWithQtde.reduce((total, item) => total + (item.product.preco * item.qtde), 0)
-    return moneyFormatter.format(saleTotal)
+    return formatCurrency(saleTotal)
   }
 
   const handleSelectProduct = (saleItem, value) => {

@@ -1,14 +1,7 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import { Stack, LinearProgress, Typography, Box, Button } from '@mui/material';
-
-export const formatCurrency = (val) => {
-  const num = Number(val.replace(/\D/g, '')) / 100;
-  return num.toLocaleString('pt-BR', {
-    style: 'currency',
-    currency: 'BRL',
-  });
-};
+import { formatCurrency } from '../../utils/format-utils';
 
 export default function MetaProgressao({ categoriaSelecionada }) {
   const currentYear = new Date().getFullYear();
@@ -157,7 +150,7 @@ export default function MetaProgressao({ categoriaSelecionada }) {
         <input
           ref={inputRef}
           type="text"
-          value={formatCurrency(value || '0')}
+          value={formatCurrency(value)}
           readOnly={!isEditMode}
           onClick={turnOnEditMode}
           onChange={handleChange}

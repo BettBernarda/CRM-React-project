@@ -4,6 +4,7 @@ import axios from "axios";
 import { Add as AddIcon } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import RequireLogin from "../components/RequireLogin";
+import { formatCurrency } from "../utils/format-utils";
 
 export default function ProductsPage() {
   const navigate = useNavigate()
@@ -66,7 +67,7 @@ export default function ProductsPage() {
                     <TableCell align="right">{product.nome}</TableCell>
                     <TableCell align="right">{product.status ? 'Ativo' : 'Inativo'}</TableCell>
                     <TableCell align="right">{product.descricao}</TableCell>
-                    <TableCell align="right">{product.preco}</TableCell>
+                    <TableCell align="right">{formatCurrency(product.preco)}</TableCell>
                     <TableCell align="right">{product.qtde}</TableCell>
                     <TableCell align="right">{findCategoriaNameById(product.categoria_id)}</TableCell>
                     <TableCell align="right">{findFornecedorNameById(product.fornecedor_id)}</TableCell>
