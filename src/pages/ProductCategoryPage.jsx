@@ -29,7 +29,6 @@ export default function ProductCategoryPage() {
       return
     }
 
-
     const now = new Date()
 
     if (id != 'novo') {
@@ -55,7 +54,7 @@ export default function ProductCategoryPage() {
   const handleNew = () => {
     navigate('/produtos/categorias/novo')
     setCategory({
-      id: category.id,
+      id: uuidv4(),
       nome: '',
       descricao: '',
     })
@@ -64,7 +63,7 @@ export default function ProductCategoryPage() {
   const handleDelete = async () => {
     if (id == 'novo') {
       setCategory({
-        id: category.id,
+        id: uuidv4(),
         nome: '',
         descricao: '',
       })

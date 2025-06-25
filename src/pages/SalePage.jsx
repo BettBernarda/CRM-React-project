@@ -80,7 +80,7 @@ export default function SalePage() {
   const handleNew = () => {
     navigate('/produtos/novo')
     setSale({
-      id: sale.id,
+      id: uuidv4(),
       cliente_id: null,
       data_hora: new Date(),
       itens: []
@@ -90,7 +90,7 @@ export default function SalePage() {
   const handleDelete = () => {
     if (id == 'novo') {
       setSale({
-        id: sale.id,
+        id: uuidv4(),
         cliente_id: null,
         data_hora: new Date(),
         itens: []
