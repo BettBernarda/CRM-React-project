@@ -135,7 +135,8 @@ export default function MetaProgressao({ categoriaSelecionada }) {
   }, [vendas, produtoInfo, currentYear, mesAtual, categoriaSelecionada]);
 
   const metaNumerica = Number(value) / 100 || 0;
-  const percentAno = metaNumerica > 0 ? (totalVendidoAno / metaNumerica) * 100 : 0;
+  const percentAno = metaNumerica > 0 ? (totalVendidoAno / metaNumerica) * 100 :0 ;
+  const percentAnoLimite = percentAno > 100 ? 100 : percentAno;
   const percentMes = metaNumerica > 0 ? (totalVendidoMes / metaNumerica) * 100 : 0;
 
   if (loadingMeta || loadingDados) return <p className="text-white">Carregando...</p>;
@@ -181,7 +182,7 @@ export default function MetaProgressao({ categoriaSelecionada }) {
         Total vendido no ano: R$ {totalVendidoAno.toFixed(2)} ({percentAno.toFixed(1)}%)
       </Typography>
       <Stack spacing={2} sx={{ mb: 3 }}>
-        <LinearProgress variant="determinate" value={percentAno} />
+        <LinearProgress variant="determinate" value={percentAnoLimite} />
       </Stack>
 
       {/* Progresso do mês atual - só texto */}
