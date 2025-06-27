@@ -6,8 +6,8 @@ Este é um sistema CRM (Customer Relationship Management) desenvolvido em React,
 
 ### Project members:
 
-- <a href target="_blanck" href="https://github.com/BettBernarda">Bettina Bernarda</a>
-- <a href target="_blanck" href="https://github.com/BettBernarda">Bruno Monteiro Bonifácio</a>
+- <a  href="https://github.com/BettBernarda" target="_blank">Bettina Bernarda</a>
+- <a target="_blank" href="https://github.com/BettBernarda">Bruno Monteiro Bonifácio</a>
 
 ## 🛠 Tecnologias Utilizadas
 
