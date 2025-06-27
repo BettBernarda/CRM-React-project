@@ -44,10 +44,3 @@ npm start
 
 
 4. Acesse o projeto no navegador via: http://localhost:3000
-
-# Salvando o conteúdo em um arquivo README.md
-file_path = "/mnt/data/README.md"
-with open(file_path, "w", encoding="utf-8") as f:
-    f.write(readme_content)
-
-file_path
